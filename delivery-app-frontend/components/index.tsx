@@ -9,7 +9,6 @@ const IndexComponent = ({}: IndexComponentProps): JSX.Element => {
     <div className="flex flex-col justify-center uppercase space-y-20">
       <Frame1 />
       <Frame2 />
-      <div className="h-[500px]"></div>
     </div>
   );
 };

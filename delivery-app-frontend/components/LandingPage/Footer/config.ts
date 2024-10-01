@@ -1,16 +1,14 @@
 interface FooterRoute {
   name: string;
-  path: string;
+  path?: string;
 }
 
 export const footerLinks1: FooterRoute[] = [
   {
     name: "Platform",
-    path: "/",
-  }, 
+  },
   {
     name: "Resources",
-    path: "/",
   },
   {
     name: "Plans & Pricing",
@@ -23,7 +21,7 @@ export const footerLinks1: FooterRoute[] = [
   {
     name: "Features",
     path: "/",
-  },  
+  },
   {
     name: "Source Code",
     path: "/",
