@@ -9,7 +9,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <div>
       <Navbar />
-      <div className="w-full px-20">{children}</div>
+      <div className="w-full px-32">{children}</div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { Instrument_Sans } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { ParallaxProvider } from "react-scroll-parallax";
 
 export const Instrument = Instrument_Sans({
   subsets: ["latin"],
@@ -17,11 +18,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>{"Drone Delivery"}</title>
       </Head>
-      <main className={`${Instrument.className} bg-customWhite h-full`}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </main>
+      <ParallaxProvider>
+        <main className={`${Instrument.className} bg-customWhite h-full`}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
+      </ParallaxProvider>
     </div>
   );
 }
