@@ -9,7 +9,7 @@ interface ProsBoxProps {
 
 const ProsBox = ({ pro }: ProsBoxProps): JSX.Element => {
   return (
-    <div className="flex flex-col justify-between rounded-xl bg-customLightGreen cursor-pointer hover:scale-[1.02] transition-all px-10 py-5 space-y-72 select-none">
+    <div className="flex flex-col justify-between rounded-xl bg-customLightGreen cursor-pointer hover:scale-[1.02] hover:shadow-lg transition-all duration-300 px-10 py-5 space-y-72 select-none">
       <button className="self-end border border-customBlack rounded-full px-6 py-2">
         <Image
           src={DiagonalArrow}
