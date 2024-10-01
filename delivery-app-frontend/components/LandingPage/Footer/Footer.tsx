@@ -1,13 +1,11 @@
-import React from "react";
-import Image from "next/image";
-import { footerLinks1, footerLinks2 } from "./config";
-import Logo from "@/public/images/dronelogowhite.svg";
-import { useRouter } from "next/router";
+import React from 'react'
+import Image from 'next/image'
+import { footerLinks1, footerLinks2 } from './config'
+import Logo from '@/public/images/dronelogowhite.svg'
+import { useRouter } from 'next/router'
 
-interface FooterProps {}
-
-const Footer = ({}: FooterProps): JSX.Element => {
-  const router = typeof window !== "undefined" ? useRouter() : undefined;
+const Footer = (): JSX.Element => {
+  const router = typeof window !== 'undefined' ? useRouter() : undefined
 
   return (
     <footer className="w-full pt-20">
@@ -31,11 +29,13 @@ const Footer = ({}: FooterProps): JSX.Element => {
               className="uppercase text-customWhite text-header4 font-light w-min whitespace-nowrap ml-3"
               key={index}
               style={{
-                cursor: link.path ? "pointer" : "default",
-                opacity: link.path ? 1 : 0.8,
+                cursor: link.path != null ? 'pointer' : 'default',
+                opacity: link.path != null ? 1 : 0.8
               }}
               onClick={() => {
-                link.path ? router?.push(link.path) : null;
+                if (link.path != null) {
+                  void router?.push(link.path)
+                }
               }}>
               {link.name}
             </div>
@@ -55,7 +55,9 @@ const Footer = ({}: FooterProps): JSX.Element => {
               key={index}
               className="uppercase font-semibold text-customBlack text-body cursor-pointer mx-3"
               onClick={() => {
-                link.path ? router?.push(link.path) : null;
+                if (link.path != null) {
+                  void router?.push(link.path)
+                }
               }}>
               {link.name}
             </div>
@@ -63,7 +65,7 @@ const Footer = ({}: FooterProps): JSX.Element => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

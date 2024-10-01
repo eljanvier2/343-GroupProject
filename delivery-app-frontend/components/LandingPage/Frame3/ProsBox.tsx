@@ -1,10 +1,10 @@
-import React from "react";
-import type { Pro } from "./config";
-import Image from "next/image";
-import DiagonalArrow from "@/public/icons/diagarrow.svg";
+import React from 'react'
+import type { Pro } from './config'
+import Image from 'next/image'
+import DiagonalArrow from '@/public/icons/diagarrow.svg'
 
 interface ProsBoxProps {
-  pro: Pro;
+  pro: Pro
 }
 
 const ProsBox = ({ pro }: ProsBoxProps): JSX.Element => {
@@ -23,7 +23,7 @@ const ProsBox = ({ pro }: ProsBoxProps): JSX.Element => {
         <div className="">{pro.description}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProsBox;
+export default ProsBox

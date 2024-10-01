@@ -1,17 +1,17 @@
-import React from "react";
-import ArrowRight from "@/public/icons/arrowright.svg";
-import Image from "next/image";
+import React from 'react'
+import ArrowRight from '@/public/icons/arrowright.svg'
+import Image from 'next/image'
 
 interface RoundButtonProps {
-  text: string;
-  onClick: () => void;
-  arrow?: boolean;
+  text: string
+  onClick: () => void
+  arrow?: boolean
 }
 
 const RoundButton = ({
   text,
   onClick,
-  arrow = true,
+  arrow = true
 }: RoundButtonProps): JSX.Element => {
   return (
     <button
@@ -26,7 +26,7 @@ const RoundButton = ({
         )}
       </div>
     </button>
-  );
-};
+  )
+}
 
-export default RoundButton;
+export default RoundButton

@@ -1,16 +1,16 @@
-import Image, { type StaticImageData } from "next/image";
-import { Parallax } from "react-scroll-parallax";
+import Image, { type StaticImageData } from 'next/image'
+import { Parallax } from 'react-scroll-parallax'
 
 interface ParallaxImageProps {
-  src: StaticImageData | string;
-  speed: number;
-  alt: string;
-  height?: string;
-  width?: string;
-  photoHeight?: number;
-  photoWidth?: number;
-  marginTop?: number;
-  justifyContent?: string;
+  src: StaticImageData | string
+  speed: number
+  alt: string
+  height?: string
+  width?: string
+  photoHeight?: number
+  photoWidth?: number
+  marginTop?: number
+  justifyContent?: string
 }
 
 const ParallaxImage = ({
@@ -21,7 +21,7 @@ const ParallaxImage = ({
   width,
   photoHeight,
   photoWidth,
-  justifyContent = "start",
+  justifyContent = 'start'
 }: ParallaxImageProps): JSX.Element => {
   return (
     <div
@@ -42,7 +42,7 @@ const ParallaxImage = ({
       </Parallax>
       <div className="absolute top-0 h-full w-full left-0 bg-black/10" />
     </div>
-  );
-};
+  )
+}
 
-export default ParallaxImage;
+export default ParallaxImage

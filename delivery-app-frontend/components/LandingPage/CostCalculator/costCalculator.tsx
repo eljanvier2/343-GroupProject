@@ -1,15 +1,12 @@
-import InputWithTitle from "@/components/Global/InputWithTitle";
-import RoundButton from "@/components/Global/RoundButton";
-import SelectWithTitle from "@/components/Global/SelectWithTitle";
-import SwitchWithTitle from "@/components/Global/SwitchWithTitle";
-import { useState } from "react";
-import React from "react";
+import InputWithTitle from '@/components/Global/InputWithTitle'
+import RoundButton from '@/components/Global/RoundButton'
+import SelectWithTitle from '@/components/Global/SelectWithTitle'
+import SwitchWithTitle from '@/components/Global/SwitchWithTitle'
+import React, { useState } from 'react'
 
-interface CostCalculatorProps {}
-
-const CostCalculator = ({}: CostCalculatorProps): JSX.Element => {
-  const [switch1Checked, setSwitch1Checked] = useState(true);
-  const [switch2Checked, setSwitch2Checked] = useState(false);
+const CostCalculator = (): JSX.Element => {
+  const [switch1Checked, setSwitch1Checked] = useState(true)
+  const [switch2Checked, setSwitch2Checked] = useState(false)
   return (
     <div className="flex flex-col rounded-3xl space-y-8 p-20 bg-white shadow-md">
       <div className="text-header3 text-center font-semibold">
@@ -19,7 +16,7 @@ const CostCalculator = ({}: CostCalculatorProps): JSX.Element => {
         <div className="flex flex-col w-1/2 space-y-8">
           <SelectWithTitle
             title="Type of Goods"
-            options={["Food", "Clothes", "Electronics"]}
+            options={['Food', 'Clothes', 'Electronics']}
             placeholder="Type"
             onChange={() => {}}
           />
@@ -34,14 +31,14 @@ const CostCalculator = ({}: CostCalculatorProps): JSX.Element => {
               <SwitchWithTitle
                 title="Week-end Delivery"
                 onChange={(value: boolean) => {
-                  setSwitch1Checked(value);
+                  setSwitch1Checked(value)
                 }}
                 checked={switch1Checked}
               />
               <SwitchWithTitle
                 title="Night-time Delivery"
                 onChange={(value: boolean) => {
-                  setSwitch2Checked(value);
+                  setSwitch2Checked(value)
                 }}
                 checked={switch2Checked}
               />
@@ -66,7 +63,7 @@ const CostCalculator = ({}: CostCalculatorProps): JSX.Element => {
         <RoundButton text="Estimate" onClick={() => {}} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CostCalculator;
+export default CostCalculator

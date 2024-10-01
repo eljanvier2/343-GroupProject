@@ -1,17 +1,15 @@
-import React from "react";
-import PrecisionDrop from "@/public/images/precision_drop_2.png";
-import ParallaxImage from "@/components/Global/ParallaxImage";
+import React from 'react'
+import PrecisionDrop from '@/public/images/precision_drop_2.png'
+import ParallaxImage from '@/components/Global/ParallaxImage'
 
-interface Frame2Props {}
-
-const Frame2 = ({}: Frame2Props): JSX.Element => {
+const Frame2 = (): JSX.Element => {
   return (
     <div className="flex flex-col items-center space-y-20">
       <div className="flex justify-between items-center">
         <div className="font-semibold text-header2">Our Concept</div>
         <div className="w-1/3 text-end">
           {
-            "Lorem ipsum odor amet, consectetuer adipiscing elit. Viverra parturient torquent torquent augue scelerisque. parturient torquent torquent augue scelerisque."
+            'Lorem ipsum odor amet, consectetuer adipiscing elit. Viverra parturient torquent torquent augue scelerisque. parturient torquent torquent augue scelerisque.'
           }
         </div>
       </div>
@@ -22,7 +20,7 @@ const Frame2 = ({}: Frame2Props): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Frame2;
+export default Frame2

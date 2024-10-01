@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const PrivacyNotice = (): JSX.Element => {
   return (
@@ -9,7 +9,7 @@ const PrivacyNotice = (): JSX.Element => {
       <h1 className="text-header1 font-bold text-center text-customBlack uppercase mb-8">Privacy Notice</h1>
 
       <div className="text-customBlack space-y-10 text-body leading-relaxed">
-        
+
         <section>
           <h2 className="text-header3 font-semibold mb-4">Introduction</h2>
           <p>
@@ -83,7 +83,7 @@ const PrivacyNotice = (): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PrivacyNotice;
+export default PrivacyNotice

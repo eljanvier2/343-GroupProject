@@ -1,22 +1,22 @@
 export interface Pro {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 
 export const pros: Pro[] = [
   {
-    title: "Flexible",
+    title: 'Flexible',
     description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit ",
+      'Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit '
   },
   {
-    title: "Ecological",
+    title: 'Ecological',
     description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit ",
+      'Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit '
   },
   {
-    title: "Secure",
+    title: 'Secure',
     description:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit ",
-  },
-];
+      'Lorem ipsum odor amet, consectetuer adipiscing elit. Faucibus sollicitudin suscipit '
+  }
+]

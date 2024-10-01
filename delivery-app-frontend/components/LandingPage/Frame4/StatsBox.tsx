@@ -1,8 +1,8 @@
-import React from "react";
-import { Stat } from "./config";
+import React from 'react'
+import { type Stat } from './config'
 
 interface StatsBoxProps {
-  stat: Stat;
+  stat: Stat
 }
 
 const StatsBox = ({ stat }: StatsBoxProps): JSX.Element => {
@@ -11,9 +11,9 @@ const StatsBox = ({ stat }: StatsBoxProps): JSX.Element => {
       <div className="text-header2 text-customLightGreen">
         {stat.percentage}%
       </div>
-      <div className="text-customWhite text-header4">{stat.hasSource ? `${stat.title}*` : stat.title}</div>
+      <div className="text-customWhite text-header4">{stat.hasSource != null ? `${stat.title}*` : stat.title}</div>
     </div>
-  );
-};
+  )
+}
 
-export default StatsBox;
+export default StatsBox

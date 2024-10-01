@@ -1,9 +1,9 @@
-import React from "react";
-import Navbar from "@/components/LandingPage/Navbar/Navbar";
-import Footer from "@/components/LandingPage/Footer/Footer";
+import React from 'react'
+import Navbar from '@/components/LandingPage/Navbar/Navbar'
+import Footer from '@/components/LandingPage/Footer/Footer'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       <div className="w-full px-32">{children}</div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react'
 import {
   Select,
   SelectTrigger,
   SelectItem,
   SelectContent,
-  SelectValue,
-} from "@/components/ui/select";
+  SelectValue
+} from '@/components/ui/select'
 
 interface SelectWithTitleProps {
-  title: string;
-  options: string[];
-  placeholder: string;
-  onChange: (value: string) => void;
+  title: string
+  options: string[]
+  placeholder: string
+  onChange: (value: string) => void
 }
 
 const SelectWithTitle = ({
   title,
   options,
   placeholder,
-  onChange,
+  onChange
 }: SelectWithTitleProps): JSX.Element => {
   return (
     <div className="space-y-1.5">
@@ -33,15 +33,15 @@ const SelectWithTitle = ({
               <SelectItem
                 key={index}
                 value={option}
-                onSelect={() => onChange(option)}>
+                onSelect={() => { onChange(option) }}>
                 {option}
               </SelectItem>
-            );
+            )
           })}
         </SelectContent>
       </Select>
     </div>
-  );
-};
+  )
+}
 
-export default SelectWithTitle;
+export default SelectWithTitle

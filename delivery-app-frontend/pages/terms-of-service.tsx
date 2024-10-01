@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const TermsOfService = (): JSX.Element => {
   return (
@@ -9,7 +9,7 @@ const TermsOfService = (): JSX.Element => {
       <h1 className="text-header1 font-bold text-center text-customBlack uppercase mb-8">Terms of Service</h1>
 
       <div className="text-customBlack space-y-10 text-body leading-relaxed">
-        
+
         <section>
           <h2 className="text-header3 font-semibold mb-4">Introduction</h2>
           <p>
@@ -69,7 +69,7 @@ const TermsOfService = (): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TermsOfService;
+export default TermsOfService

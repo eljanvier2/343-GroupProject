@@ -1,23 +1,23 @@
 interface Route {
-  name: string;
-  path: string;
+  name: string
+  path: string
 }
 
 export const routes: Route[] = [
   {
-    name: "Our Concept",
-    path: "/",
+    name: 'Our Concept',
+    path: '/'
   },
   {
-    name: "Features",
-    path: "/",
+    name: 'Features',
+    path: '/'
   },
   {
-    name: "Pricing",
-    path: "/",
+    name: 'Pricing',
+    path: '/'
   },
   {
-    name: "Contact Us",
-    path: "/",
-  },
-];
+    name: 'Contact Us',
+    path: '/'
+  }
+]
