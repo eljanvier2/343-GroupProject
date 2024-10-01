@@ -15,7 +15,6 @@ const IndexComponent = ({}: IndexComponentProps): JSX.Element => {
       <Frame3 />
       <Frame4 />
       <CostCalculator />
-      <div className="h-[500px]"></div>
     </div>
   );
 };
