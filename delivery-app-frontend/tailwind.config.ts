@@ -21,6 +21,7 @@ const config: Config = {
         header1: "6rem",
         header2: "4rem",
         header3: "3rem",
+        header4: "1.25rem",
         body: "1rem",
       },
     },
