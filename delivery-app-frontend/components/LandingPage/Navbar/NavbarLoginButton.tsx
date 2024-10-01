@@ -6,8 +6,8 @@ interface NavbarLoginButtonProps {}
 
 const NavbarLoginButton = ({}: NavbarLoginButtonProps): JSX.Element => {
   return (
-    <div className="flex items-center justify-center space-x-6 h-full">
-      <div className="text-customBlack uppercase text-xl cursor-pointer font-medium">
+    <div className="flex items-center justify-center space-x-6 h-full cursor-pointer hover:scale-105 transition-all">
+      <div className="text-customBlack uppercase text-xl font-medium">
         Log In
       </div>
       <div className="border border-customBlack rounded-full px-6 py-2">

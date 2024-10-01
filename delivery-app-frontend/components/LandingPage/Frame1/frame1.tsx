@@ -8,7 +8,7 @@ interface Frame1Props {}
 const Frame1 = ({}: Frame1Props): JSX.Element => {
   return (
     <div className="flex flex-col items-center">
-      <div className="flex-col uppercase text-black text-center -space-y-2">
+      <div className="flex-col uppercase text-center -space-y-2">
         <div className="font-medium">Your Parcels</div>
         <div className="text-header1 font-semibold">Wherever Whenever</div>
       </div>
