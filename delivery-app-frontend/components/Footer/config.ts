@@ -41,14 +41,14 @@ export const footerLinks1: FooterRoute[] = [
 export const footerLinks2: FooterRoute[] = [
   {
     name: "Terms Of Service",
-    path: "/",
+    path: "/terms-of-service",
   },
   {
     name: "Privacy Notice",
-    path: "/",
+    path: "/privacy-notice",
   },
   {
     name: "Cookies",
-    path: "/",
+    path: "/cookies",
   },
 ];

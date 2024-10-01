@@ -17,7 +17,7 @@ const Footer = ({}: FooterProps): JSX.Element => {
         
         <div className="w-1/2">
           <Image src={Logo} alt="logo" width={128} height={128} /> 
-          <div className="w-455 text-customWhite text-header3 mt-2">
+          <div className="w-455 font-semibold text-customWhite text-header3 mt-2">
           Greener without compromising on comfort
           </div>
           <div className="w-159 text-customWhite text-body mt-2">
@@ -41,7 +41,7 @@ const Footer = ({}: FooterProps): JSX.Element => {
       {/* BOTTOM FOOTER */}
       <div className="w-full h-1/5 bg-customGreen flex justify-between items-center py-2 px-20 border-t border-customBlack">
       
-        <div className="w-1/3 text-customBlack text-body">
+        <div className="w-1/3 font-semibold text-customBlack text-body">
             © {new Date().getFullYear()} DroneDelivery Inc. All rights reserved.
         </div>
 
@@ -50,7 +50,7 @@ const Footer = ({}: FooterProps): JSX.Element => {
           {footerLinks2.map((link, index) => (
             <div
               key={index}
-              className="uppercase text-customBlack text-body cursor-pointer mx-3"
+              className="uppercase font-semibold text-customBlack text-body cursor-pointer mx-3"
               onClick={() => router?.push(link.path)}
             >
               {link.name}
