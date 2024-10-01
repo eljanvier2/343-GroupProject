@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.delivery-app-frontend/**'
+      - 'delivery-app-frontend/**'
 
 jobs:
   build-and-test:
