@@ -16,7 +16,7 @@ const Frame2 = ({}: Frame2Props): JSX.Element => {
         </div>
       </div>
       <div className="relative w-full min-h-[200px] max-h-[600px] overflow-hidden rounded-xl">
-        <ParallaxImage src={PrecisionDrop} alt="Precision Drop" speed={12} />
+        <ParallaxImage src={PrecisionDrop} alt="Precision Drop" speed={14} />
         <div className="absolute flex top-1/2 left-1/2 -translate-x-1/2 bg-black/20 h-full justify-center items-center -translate-y-1/2 text-customWhite text-header2 font-semibold w-full">
           Drone delivery
         </div>
