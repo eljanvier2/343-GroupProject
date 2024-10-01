@@ -9,7 +9,7 @@ interface IndexComponentProps {}
 
 const IndexComponent = ({}: IndexComponentProps): JSX.Element => {
   return (
-    <div className="flex flex-col justify-center uppercase space-y-20">
+    <div className="flex flex-col justify-center uppercase space-y-40">
       <Frame1 />
       <Frame2 />
       <Frame3 />

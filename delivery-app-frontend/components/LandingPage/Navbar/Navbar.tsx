@@ -11,7 +11,7 @@ interface NavbarProps {}
 const Navbar = ({}: NavbarProps): JSX.Element => {
   const router = typeof window !== "undefined" ? useRouter() : undefined;
   return (
-    <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black">
+    <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
       <div className="w-1/3">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </div>
