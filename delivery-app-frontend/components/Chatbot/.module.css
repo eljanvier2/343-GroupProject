@@ -1,0 +1,113 @@
+.chatButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2ACB98;
+    padding: 20px;
+    border-radius: 40%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+.chatbotContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    bottom: 80px;
+    right: 20px;
+    width: 400px;
+    height: 600px;
+    background-color: #fff;
+    border: 2px solid #2ACB98;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+}
+
+.chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2ACB98;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.chatHeaderButton {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.messagesContainer {
+    flex: 1;
+    padding: 15px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    background-color: #E5E4E2;
+    border-radius: 50%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.userAvatar {
+    background-color: #3CBC7C;
+}
+
+.messageBubble {
+    border-radius: 15px;
+    padding: 10px 15px;
+    max-width: 80%;
+    word-break: break-word;
+}
+
+.userBubble {
+    background-color: #3CBC7C;
+    color: #fff;
+}
+
+.assistantBubble {
+    background-color: #E5E4E2;
+    color: #000;
+}
+
+.chatForm {
+    display: flex;
+    padding: 15px;
+    border-top: 2px solid #ccc;
+    background-color: #fff;
+}
+
+.chatInput {
+    flex: 1;
+    color: #000;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    outline: none;
+    margin-right: 10px;
+}
+
+.chatButtonSend {
+    padding: 10px 15px;
+    background-color: #2ACB98;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+}
