@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import Image from 'next/image';
-import Logo from '@/public/images/dronelogo.svg';
-import DroneSignup from '@/public/images/dronelogin.jpg';
+import React, { useState } from 'react'
+import Image from 'next/image'
+import Logo from '@/public/images/dronelogo.svg'
+import DroneSignup from '@/public/images/dronelogin.jpg'
 
 const SignUpPage = (): JSX.Element => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  const handleSignUp = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSignUp = (e: React.FormEvent): void => {
+    e.preventDefault()
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+      alert('Passwords do not match!')
+      return
     }
-    console.log("Signing up with", { email, password });
-  };
+    console.log('Signing up with', { email, password })
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-customWhite">
       <div className="flex w-full max-w-6xl shadow-lg rounded-lg overflow-hidden">
-        
-        {/*Left Side*/}
+
+        {/* Left Side */}
         <div className="hidden md:flex md:w-1/2">
           <Image
             src={DroneSignup}
@@ -30,7 +30,7 @@ const SignUpPage = (): JSX.Element => {
           />
         </div>
 
-        {/*Right Side*/}
+        {/* Right Side */}
          <div className="w-full md:w-1/2 p-8 flex flex-col justify-center bg-white">
           <div className="max-w-md mx-auto">
             <div className="flex justify-start mb-8">
@@ -42,8 +42,8 @@ const SignUpPage = (): JSX.Element => {
             </h1>
 
             <form onSubmit={handleSignUp} className="space-y-6">
-             
-              {/*Email*/}
+
+              {/* Email */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-customBlack">
                   Email
@@ -52,14 +52,14 @@ const SignUpPage = (): JSX.Element => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value) }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="mail@abc.com"
                   required
                 />
               </div>
 
-              {/*Password*/}
+              {/* Password */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-customBlack">
                   Password
@@ -68,14 +68,14 @@ const SignUpPage = (): JSX.Element => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => { setPassword(e.target.value) }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
                 />
               </div>
 
-              {/*Confirm Password*/}
+              {/* Confirm Password */}
               <div>
                 <label htmlFor="confirm_password" className="block text-sm font-medium text-customBlack">
                   Confirm Password
@@ -84,14 +84,14 @@ const SignUpPage = (): JSX.Element => {
                   type="password"
                   id="confirm_password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => { setConfirmPassword(e.target.value) }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
                 />
               </div>
 
-              {/*Button*/}
+              {/* Button */}
               <button
                 type="submit"
                 className="w-full bg-customGreen text-customWhite py-3 px-4 rounded-md hover:bg-customLightGreen focus:outline-none focus:ring-2 focus:ring-customGreen focus:ring-offset-2"
@@ -100,10 +100,10 @@ const SignUpPage = (): JSX.Element => {
               </button>
             </form>
 
-            {/*Log In*/}
+            {/* Log In */}
             <div className="mt-6 text-center">
               <p className="text-sm text-customBlack">
-                Already have an account?{" "}
+                Already have an account?{' '}
                 <a href="/login" className="text-customGreen hover:text-customLightGreen font-medium">
                   Log In
                 </a>
@@ -113,7 +113,7 @@ const SignUpPage = (): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignUpPage;
+export default SignUpPage

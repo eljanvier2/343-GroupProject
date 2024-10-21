@@ -11,7 +11,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({
-  showLogin,
+  showLogin
 }: NavbarProps): JSX.Element => {
   const router = typeof window !== 'undefined' ? useRouter() : undefined
   return (

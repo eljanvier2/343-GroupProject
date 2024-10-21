@@ -1,18 +1,17 @@
-import React from "react";
-import Image from "next/image";
-import Arrow from "@/public/icons/diagarrow.svg";
-import { useRouter } from "next/router";
+import React from 'react'
+import Image from 'next/image'
+import Arrow from '@/public/icons/diagarrow.svg'
 
 interface NavbarLoginButtonProps {
-  showLogin: (value: boolean) => void;
+  showLogin: (value: boolean) => void
 }
 
 const NavbarLoginButton = ({
-  showLogin,
+  showLogin
 }: NavbarLoginButtonProps): JSX.Element => {
   return (
     <div
-      onClick={() => showLogin(true)}
+      onClick={() => { showLogin(true) }}
       className="flex items-center justify-center space-x-6 h-full cursor-pointer hover:scale-105 transition-all duration-300">
       <div className="text-customBlack uppercase text-xl font-medium">
         Log In
@@ -21,7 +20,7 @@ const NavbarLoginButton = ({
         <Image src={Arrow} alt="arrow" width={20} height={20} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NavbarLoginButton;
+export default NavbarLoginButton

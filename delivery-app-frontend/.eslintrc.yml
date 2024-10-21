@@ -18,7 +18,8 @@ plugins:
   - '@typescript-eslint'
 rules: 
   react/react-in-jsx-scope: off
-  overrides:
+
+overrides:
   - files: ['**/*.ts', '**/*.tsx']
     rules:
       react/prop-types: 'off'

@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import Logo from "@/public/images/dronelogo.svg";
-import DroneLogin from "@/public/images/dronelogin.jpg";
+import React, { useState } from 'react'
+import Image from 'next/image'
+import Logo from '@/public/images/dronelogo.svg'
+import DroneLogin from '@/public/images/dronelogin.jpg'
 
 interface LoginProps {
-  showSignup: (value: boolean) => void;
+  showSignup: (value: boolean) => void
 }
 
 const Login = ({ showSignup }: LoginProps): JSX.Element => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Logging in with", { email, password, rememberMe });
-  };
+  const handleLogin = (e: React.FormEvent): void => {
+    e.preventDefault()
+    console.log('Logging in with', { email, password, rememberMe })
+  }
 
   return (
     <div>
       <div className="flex w-full max-w-6xl h-[80vh] shadow-lg rounded-lg overflow-hidden">
-        {/*Left Side*/}
+        {/* Left Side */}
         <div className="hidden md:flex md:w-1/2">
           <Image
             src={DroneLogin}
@@ -29,7 +29,7 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
           />
         </div>
 
-        {/*Right Side*/}
+        {/* Right Side */}
         <div className="w-full md:w-1/2 p-8 flex flex-col bg-white">
           <div className="max-w-md mx-auto">
             <div className="flex justify-start mb-8">
@@ -41,7 +41,7 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
             </h1>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              {/*Email*/}
+              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -52,14 +52,14 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value) }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="mail@abc.com"
                   required
                 />
               </div>
 
-              {/*Password*/}
+              {/* Password */}
               <div>
                 <label
                   htmlFor="password"
@@ -70,14 +70,14 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => { setPassword(e.target.value) }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
                 />
               </div>
 
-              {/*Remember Me/Forgot Password*/}
+              {/* Remember Me/Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -85,7 +85,7 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                     name="remember_me"
                     type="checkbox"
                     checked={rememberMe}
-                    onChange={() => setRememberMe(!rememberMe)}
+                    onChange={() => { setRememberMe(!rememberMe) }}
                     className="h-4 w-4 text-customGreen focus:ring-customGreen border-gray-300 rounded"
                   />
                   <label
@@ -104,7 +104,7 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                 </div>
               </div>
 
-              {/*Button*/}
+              {/* Button */}
               <button
                 type="submit"
                 className="w-full bg-customGreen text-customWhite py-3 px-4 rounded-md hover:bg-customLightGreen focus:outline-none focus:ring-2 focus:ring-customGreen focus:ring-offset-2">
@@ -112,12 +112,12 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
               </button>
             </form>
 
-            {/*Sign Up*/}
+            {/* Sign Up */}
             <div className="mt-6 text-center">
               <p className="text-sm text-customBlack">
-                Not Registered Yet?{" "}
+                Not Registered Yet?{' '}
                 <a
-                onClick={() => showSignup(true)}
+                onClick={() => { showSignup(true) }}
                   className="text-customGreen hover:text-customLightGreen font-medium">
                   Create an account
                 </a>
@@ -127,7 +127,7 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
