@@ -6,7 +6,13 @@ import Logo from '@/public/images/dronelogo.svg'
 import NavbarLoginButton from './NavbarLoginButton'
 import { useRouter } from 'next/router'
 
-const Navbar = (): JSX.Element => {
+interface NavbarProps {
+  showLogin: (value: boolean) => void
+}
+
+const Navbar = ({
+  showLogin,
+}: NavbarProps): JSX.Element => {
   const router = typeof window !== 'undefined' ? useRouter() : undefined
   return (
     <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
@@ -27,7 +33,7 @@ const Navbar = (): JSX.Element => {
         })}
       </div>
       <div className="w-1/3 flex justify-end items-center">
-        <NavbarLoginButton />
+        <NavbarLoginButton showLogin={showLogin}/>
       </div>
     </div>
   )
