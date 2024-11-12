@@ -1,44 +1,43 @@
-import InputWithTitle from "@/components/Global/InputWithTitle";
-import RoundButton from "@/components/Global/RoundButton";
-import SelectWithTitle from "@/components/Global/SelectWithTitle";
-import SliderWithTitle from "@/components/Global/SliderWithTitle";
-import SwitchWithTitle from "@/components/Global/SwitchWithTitle";
-import { Slider } from "@/components/ui/slider";
-import React, { useState } from "react";
+import InputWithTitle from '@/components/Global/InputWithTitle'
+import RoundButton from '@/components/Global/RoundButton'
+import SelectWithTitle from '@/components/Global/SelectWithTitle'
+import SliderWithTitle from '@/components/Global/SliderWithTitle'
+import SwitchWithTitle from '@/components/Global/SwitchWithTitle'
+import React, { useState } from 'react'
 
 interface Estimate {
-  type: string;
-  weight: number;
-  distance: number;
-  weekEnd: boolean;
-  night: boolean;
+  type: string
+  weight: number
+  distance: number
+  weekEnd: boolean
+  night: boolean
 }
 
 const CostCalculator = (): JSX.Element => {
-  const [switch1Checked, setSwitch1Checked] = useState(true);
-  const [switch2Checked, setSwitch2Checked] = useState(false);
-  const [cost, setCost] = useState(2);
+  const [switch1Checked, setSwitch1Checked] = useState(true)
+  const [switch2Checked, setSwitch2Checked] = useState(false)
+  const [cost, setCost] = useState(2)
   const [estimate, setEstimate] = useState<Estimate>({
-    type: "",
+    type: '',
     weight: 0,
     distance: 0,
     weekEnd: false,
-    night: false,
-  });
+    night: false
+  })
 
   const EstimateCost = (estimate: Estimate): number => {
-    let cost = 2;
+    let cost = 2
     if (estimate.distance > 2) {
-      cost += 0.5 * estimate.distance;
+      cost += 0.5 * estimate.distance
     }
     if (estimate.weight > 2) {
-      cost += estimate.weight * 0.75;
+      cost += estimate.weight * 0.75
     }
-    if (estimate.weekEnd) cost++;
-    if (estimate.night) cost++;
-    return cost;
-  };
-  console.log(estimate, cost);
+    if (estimate.weekEnd) cost++
+    if (estimate.night) cost++
+    return cost
+  }
+  console.log(estimate, cost)
   return (
     <div className="flex flex-col rounded-3xl space-y-8 p-20 bg-white shadow-md">
       <div className="text-header3 text-center font-semibold">
@@ -48,16 +47,16 @@ const CostCalculator = (): JSX.Element => {
         <div className="flex flex-col w-1/2 space-y-8">
           <SelectWithTitle
             title="Type of Goods"
-            options={["Food", "Clothes", "Electronics"]}
+            options={['Food', 'Clothes', 'Electronics']}
             placeholder="Type"
             onChange={(value: string) => {
-              setEstimate((prev) => ({ ...prev, type: value }));
+              setEstimate((prev) => ({ ...prev, type: value }))
             }}
           />
           <SliderWithTitle
             title="Distance"
             onChange={(value: number) => {
-              setEstimate((prev) => ({ ...prev, distance: value }));
+              setEstimate((prev) => ({ ...prev, distance: value }))
             }}
             defaultValue={0}
             max={10}
@@ -74,16 +73,16 @@ const CostCalculator = (): JSX.Element => {
               <SwitchWithTitle
                 title="Week-end Delivery"
                 onChange={(value: boolean) => {
-                  setSwitch1Checked(value);
-                  setEstimate((prev) => ({ ...prev, weekEnd: value }));
+                  setSwitch1Checked(value)
+                  setEstimate((prev) => ({ ...prev, weekEnd: value }))
                 }}
                 checked={switch1Checked}
               />
               <SwitchWithTitle
                 title="Night-time Delivery"
                 onChange={(value: boolean) => {
-                  setSwitch2Checked(value);
-                  setEstimate((prev) => ({ ...prev, night: value }));
+                  setSwitch2Checked(value)
+                  setEstimate((prev) => ({ ...prev, night: value }))
                 }}
                 checked={switch2Checked}
               />
@@ -95,7 +94,7 @@ const CostCalculator = (): JSX.Element => {
             title="Package weight (kg)"
             placeholder="Weight"
             onChange={(value) => {
-              setEstimate((prev) => ({ ...prev, weight: Number(value) }));
+              setEstimate((prev) => ({ ...prev, weight: Number(value) }))
             }}
             type="number"
           />
@@ -110,12 +109,12 @@ const CostCalculator = (): JSX.Element => {
         <RoundButton
           text="Estimate"
           onClick={() => {
-            setCost(EstimateCost(estimate));
+            setCost(EstimateCost(estimate))
           }}
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CostCalculator;
+export default CostCalculator
