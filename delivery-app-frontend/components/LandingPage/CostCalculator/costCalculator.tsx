@@ -16,7 +16,7 @@ interface Estimate {
 const CostCalculator = (): JSX.Element => {
   const [switch1Checked, setSwitch1Checked] = useState(true)
   const [switch2Checked, setSwitch2Checked] = useState(false)
-  const [cost, setCost] = useState(2)
+  const [cost, setCost] = useState(0)
   const [estimate, setEstimate] = useState<Estimate>({
     type: '',
     weight: 0,
@@ -27,6 +27,7 @@ const CostCalculator = (): JSX.Element => {
 
   const EstimateCost = (estimate: Estimate): number => {
     let cost = 2
+    if (estimate.type === 'Food') cost++
     if (estimate.distance > 2) {
       cost += 0.5 * estimate.distance
     }
@@ -37,7 +38,6 @@ const CostCalculator = (): JSX.Element => {
     if (estimate.night) cost++
     return cost
   }
-  console.log(estimate, cost)
   return (
     <div className="flex flex-col rounded-3xl space-y-8 p-20 bg-white shadow-md">
       <div className="text-header3 text-center font-semibold">
@@ -98,6 +98,14 @@ const CostCalculator = (): JSX.Element => {
             }}
             type="number"
           />
+          <div
+            className="flex flex-col items-center justify-center h-[100%] transition transition-all duration-500"
+            style={{ opacity: cost > 0 ? 1 : 0 }}>
+            <div className="flex items-end space-x-1">
+              <div className="text-3xl">Around {cost}</div>
+              <div className="text-xl"> cad</div>
+            </div>
+          </div>
           {/* <InputWithTitle
             title="Delivered To"
             placeholder="Address"
