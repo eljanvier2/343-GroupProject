@@ -3,6 +3,7 @@ import Navbar from '@/components/LandingPage/Navbar/Navbar'
 import Footer from '@/components/LandingPage/Footer/Footer'
 import Login from '@/components/Global/Login/LoginComponent'
 import SignUp from '@/components/Global/Login/SignupComponent'
+import Chatbot from '@/components/Chatbot/Chatbot';
 
 interface LayoutProps {
   children: React.ReactNode
@@ -52,6 +53,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       )}
 
       <div className="w-full px-32">{children}</div>
+      <Chatbot />
       <Footer />
     </div>
   )
