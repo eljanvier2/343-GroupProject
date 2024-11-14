@@ -16,8 +16,9 @@ const SignIn: React.FC = () => {
     try {
       // Firebase sign-in with email and password
       await signInWithEmailAndPassword(auth, email, password);
+      console.log('prout')
       // Redirect or handle successful login
-      window.location.href = "/"; // Adjust redirect as needed
+      window.location.href = "/dashboard"; // Adjust redirect as needed
     } catch (error) {
       setError("Invalid email or password");
       console.error("Firebase sign-in error:", error);
