@@ -1,16 +1,16 @@
-import { auth } from "../lib/firebase";
-import { signOut } from "firebase/auth";
+import { auth } from '../lib/firebase'
+import { signOut } from 'firebase/auth'
 
-export default function SignOutButton() {
-  const handleSignOut = () => {
+export default function SignOutButton (): JSX.Element {
+  const handleSignOut = (): void => {
     signOut(auth)
       .then(() => {
-        window.location.href = "/signin"; // Redirect to the sign-in page after sign-out
+        window.location.href = '/signin' // Redirect to the sign-in page after sign-out
       })
       .catch((error) => {
-        console.error("Error signing out:", error);
-      });
-  };
+        console.error('Error signing out:', error)
+      })
+  }
 
-  return <button onClick={handleSignOut}>Sign Out</button>;
+  return <button onClick={handleSignOut}>Sign Out</button>
 }

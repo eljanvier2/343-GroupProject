@@ -1,7 +1,5 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-
-console.log("API Key from .env.local in next.config.mjs:", process.env.FIREBASE_API_KEY);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { use, useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface DashboardProps {
+  isAuthenticated: boolean;
 }
 
-const Dashboard = ({}: DashboardProps): JSX.Element => {
-  return (
-    <div className='text-black'>
-        Succesfully Logged-In
-    </div>
-  );
-}
+const Dashboard = ({ isAuthenticated }: DashboardProps): JSX.Element => {
+  const router = useRouter();
+
+//   useEffect(() => {
+//     const timer = setTimeout(() => {
+//       if (!isAuthenticated) {
+//         void router.push("/");
+//       }
+//     }, 2000);
+//   }, [isAuthenticated]);
+
+useEffect(() => {}, [isAuthenticated]);
+  return <div className="text-black">{isAuthenticated ? 'Succesfully Logged-In' : 'Access Denied, please login'}</div>;
+};
 
 export default Dashboard;
