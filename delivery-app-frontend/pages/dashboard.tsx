@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 interface DashboardProps {
   isAuthenticated: boolean
