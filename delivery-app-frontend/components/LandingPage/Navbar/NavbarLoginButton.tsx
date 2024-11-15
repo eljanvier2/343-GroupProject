@@ -42,7 +42,7 @@ const NavbarLoginButton = ({
         <Image src={Arrow} alt="arrow" width={20} height={20} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NavbarLoginButton;
+export default NavbarLoginButton
