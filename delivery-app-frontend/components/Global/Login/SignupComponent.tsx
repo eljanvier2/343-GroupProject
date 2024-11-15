@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Logo from '@/public/images/dronelogo.svg'
 import DroneSignup from '@/public/images/dronelogin.jpg'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 interface SignUpProps {
   showSignup: (value: boolean) => void
@@ -11,11 +12,21 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const auth = getAuth()
 
   const handleSignUp = (e: React.FormEvent): void => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert('Passwords do not match!')
+      return
+    }
+    try {
+      void createUserWithEmailAndPassword(auth, email, password).then(() => {
+        showSignup(false)
+      })
+    } catch (error) {
+      console.error('Error creating user:', error)
+      alert(error.message)
     }
   }
 
