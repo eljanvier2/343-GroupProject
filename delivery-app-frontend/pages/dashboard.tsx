@@ -17,7 +17,7 @@ const Dashboard = ({ isAuthenticated }: DashboardProps): JSX.Element => {
 //   }, [isAuthenticated]);
 
 useEffect(() => {}, [isAuthenticated]);
-  return <div className="text-black">{isAuthenticated ? 'Succesfully Logged-In' : 'Access Denied, please login'}</div>;
+  return <div className="text-black">{isAuthenticated ? 'Succesfully Logged-In' : 'Succesfully logged-in'}</div>;
 };
 
 export default Dashboard;
