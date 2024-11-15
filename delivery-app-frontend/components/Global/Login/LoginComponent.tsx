@@ -1,20 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, type FormEvent } from 'react'
 import Image from 'next/image'
 import Logo from '@/public/images/dronelogo.svg'
 import DroneLogin from '@/public/images/dronelogin.jpg'
-
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../../lib/firebase'
+import { useRouter } from 'next/router'
 interface LoginProps {
   showSignup: (value: boolean) => void
+  isAuthenticated: boolean
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Login = ({ showSignup }: LoginProps): JSX.Element => {
+const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
+  const router = useRouter()
 
-  const handleLogin = (e: React.FormEvent): void => {
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setIsAuthenticated(!!user);
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
+
+  const handleSignIn = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
-    console.log('Logging in with', { email, password, rememberMe })
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      setIsAuthenticated(true)
+      void router.push('/dashboard')
+    } catch (error) {
+      console.error('Firebase sign-in error:', error)
+    }
   }
 
   return (
@@ -40,7 +59,13 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
               LOG IN TO YOUR ACCOUNT
             </h1>
 
-            <form onSubmit={handleLogin} className="space-y-6">
+            <form
+              onSubmit={(event) => {
+                void handleSignIn(event)
+                event.preventDefault()
+              }}
+              className="space-y-6">
+              {' '}
               {/* Email */}
               <div>
                 <label
@@ -52,13 +77,14 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => { setEmail(e.target.value) }}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="mail@abc.com"
                   required
                 />
               </div>
-
               {/* Password */}
               <div>
                 <label
@@ -70,13 +96,14 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => { setPassword(e.target.value) }}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
                 />
               </div>
-
               {/* Remember Me/Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -85,7 +112,9 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                     name="remember_me"
                     type="checkbox"
                     checked={rememberMe}
-                    onChange={() => { setRememberMe(!rememberMe) }}
+                    onChange={() => {
+                      setRememberMe(!rememberMe)
+                    }}
                     className="h-4 w-4 text-customGreen focus:ring-customGreen border-gray-300 rounded"
                   />
                   <label
@@ -103,7 +132,6 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
                   </a>
                 </div>
               </div>
-
               {/* Button */}
               <button
                 type="submit"
@@ -117,7 +145,9 @@ const Login = ({ showSignup }: LoginProps): JSX.Element => {
               <p className="text-sm text-customBlack">
                 Not Registered Yet?{' '}
                 <a
-                onClick={() => { showSignup(true) }}
+                  onClick={() => {
+                    showSignup(true)
+                  }}
                   className="text-customGreen hover:text-customLightGreen font-medium">
                   Create an account
                 </a>

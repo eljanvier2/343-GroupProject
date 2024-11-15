@@ -12,9 +12,7 @@ const SignUpPage = (): JSX.Element => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert('Passwords do not match!')
-      return
     }
-    console.log('Signing up with', { email, password })
   }
 
   return (

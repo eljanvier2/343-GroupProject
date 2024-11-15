@@ -10,7 +10,6 @@ const LoginPage = (): JSX.Element => {
 
   const handleLogin = (e: React.FormEvent): void => {
     e.preventDefault()
-    console.log('Logging in with', { email, password, rememberMe })
   }
 
   return (

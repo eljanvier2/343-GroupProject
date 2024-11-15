@@ -16,9 +16,7 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert('Passwords do not match!')
-      return
     }
-    console.log('Signing up with', { email, password })
   }
 
   return (
@@ -56,7 +54,9 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
                   type="email"
                   id="email"
                   value={email}
-                  onChange={(e) => { setEmail(e.target.value) }}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="mail@abc.com"
                   required
@@ -74,7 +74,9 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
                   type="password"
                   id="password"
                   value={password}
-                  onChange={(e) => { setPassword(e.target.value) }}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
@@ -92,7 +94,9 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
                   type="password"
                   id="confirm_password"
                   value={confirmPassword}
-                  onChange={(e) => { setConfirmPassword(e.target.value) }}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value)
+                  }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
                   required
@@ -112,7 +116,9 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
               <p className="text-sm text-customBlack">
                 Already have an account?{' '}
                 <a
-                  onClick={() => { showSignup(false) }}
+                  onClick={() => {
+                    showSignup(false)
+                  }}
                   className="text-customGreen hover:text-customLightGreen font-medium">
                   Log In
                 </a>

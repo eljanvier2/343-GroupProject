@@ -7,9 +7,15 @@ import Chatbot from '@/components/Chatbot/Chatbot'
 
 interface LayoutProps {
   children: React.ReactNode
+  isAuthenticated: boolean
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Layout = ({ children }: LayoutProps): JSX.Element => {
+const Layout = ({
+  children,
+  isAuthenticated,
+  setIsAuthenticated
+}: LayoutProps): JSX.Element => {
   const [showLogin, setShowLogin] = useState(false)
   const [showSignup, setShowSignup] = useState(false)
 
@@ -19,6 +25,12 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       document.body.style.overflow = 'auto'
     }
   }, [showLogin])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setShowLogin(false)
+    }
+  }, [isAuthenticated])
 
   const handleBackgroundClick = (): void => {
     setShowLogin(false)
@@ -31,7 +43,13 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
 
   return (
     <div className="relative">
-      <Navbar showLogin={(value: boolean) => { setShowLogin(value) }} />
+      <Navbar
+        showLogin={(value: boolean) => {
+          setShowLogin(value)
+        }}
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
+      />
       {showLogin && (
         <div
           className="absolute z-10 flex items-center justify-center top-0 left-0 w-full h-[100vh] bg-black bg-opacity-50"
@@ -39,13 +57,19 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
           <div onClick={handleModalClick}>
             {showSignup
               ? (
-              <SignUp showSignup={(value: boolean) => { setShowSignup(false) }} />
+              <SignUp
+                showSignup={(value: boolean) => {
+                  setShowSignup(false)
+                }}
+              />
                 )
               : (
               <Login
                 showSignup={(value: boolean) => {
                   setShowSignup(value)
                 }}
+                isAuthenticated={isAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
               />
                 )}
           </div>

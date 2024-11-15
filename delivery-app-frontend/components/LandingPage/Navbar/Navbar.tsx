@@ -8,12 +8,17 @@ import { useRouter } from 'next/router'
 
 interface NavbarProps {
   showLogin: (value: boolean) => void
+  isAuthenticated: boolean
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Navbar = ({
-  showLogin
+  showLogin,
+  isAuthenticated,
+  setIsAuthenticated
 }: NavbarProps): JSX.Element => {
   const router = typeof window !== 'undefined' ? useRouter() : undefined
+
   return (
     <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
       <div className="w-1/3">
@@ -33,7 +38,11 @@ const Navbar = ({
         })}
       </div>
       <div className="w-1/3 flex justify-end items-center">
-        <NavbarLoginButton showLogin={showLogin}/>
+        <NavbarLoginButton
+          showLogin={showLogin}
+          isAuthenticated={isAuthenticated}
+          setIsAuthenticated={setIsAuthenticated}
+        />
       </div>
     </div>
   )
