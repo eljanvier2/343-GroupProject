@@ -13,6 +13,8 @@
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slider": "^1.2.1",
     "@radix-ui/react-switch": "^1.1.0",
+    "@stripe/react-stripe-js": "^2.9.0",
+    "@stripe/stripe-js": "^4.10.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "delivery-app-frontend": "file:",
@@ -22,12 +24,13 @@
     "next": "14.2.13",
     "next-auth": "^4.24.10",
     "node-fetch": "^3.3.2",
+    "openai": "^4.67.1",
     "react": "^18",
     "react-dom": "^18",
     "react-scroll-parallax": "^3.4.5",
+    "stripe": "^17.3.1",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7",
-    "openai": "^4.67.1"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.14",
