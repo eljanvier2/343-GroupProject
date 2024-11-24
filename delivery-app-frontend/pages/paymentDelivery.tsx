@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 declare const google: any;
 
@@ -10,6 +11,10 @@ const warehouses = [
   { name: 'Warehouse 5', lat: 45.5300, lng: -73.545 },
 ];
 
+// Montreal center coordinates
+const MONTREAL_CENTER = { lat: 45.5017, lng: -73.5673 };
+const DELIVERY_RADIUS_KM = 10; // Updated delivery radius to 10 km
+
 const PaymentDelivery = () => {
   const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
@@ -19,6 +24,7 @@ const PaymentDelivery = () => {
   const [marker, setMarker] = useState<any>(null);
   const [price, setPrice] = useState<number | null>(null);
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {
@@ -85,7 +91,8 @@ const PaymentDelivery = () => {
     const dLng = ((lng2 - lng1) * Math.PI) / 180;
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distance in km
   };
@@ -100,7 +107,21 @@ const PaymentDelivery = () => {
       return;
     }
 
+    // Check if address is within the delivery radius
+    const distanceFromMontreal = calculateDistance(
+      coordinates.lat,
+      coordinates.lng,
+      MONTREAL_CENTER.lat,
+      MONTREAL_CENTER.lng
+    );
+
+    if (distanceFromMontreal > DELIVERY_RADIUS_KM) {
+      setError(`Sorry, the selected address is outside the delivery area (${DELIVERY_RADIUS_KM} km radius).`);
+      return;
+    }
+
     // Find the nearest warehouse
+
     let minDistance = Infinity;
     let nearest = null;
 
@@ -111,6 +132,7 @@ const PaymentDelivery = () => {
         warehouse.lat,
         warehouse.lng
       );
+
       if (distance < minDistance) {
         minDistance = distance;
         nearest = warehouse;
@@ -124,6 +146,10 @@ const PaymentDelivery = () => {
     const weightCost = parseFloat(weight) * 1; // $1 per kg
     const totalPrice = 5 + distanceCost + weightCost; // Base price + distance + weight
     setPrice(totalPrice);
+  };
+
+  const handleCheckout = () => {
+    router.push(`/checkout?price=${price}`);       // Redirect to checkout page with price
   };
 
   return (
@@ -162,6 +188,9 @@ const PaymentDelivery = () => {
         <div style={styles.result}>
           <p>Nearest Warehouse: {nearestWarehouse.name}</p>
           <p>Price: ${price.toFixed(2)}</p>
+          <button onClick={handleCheckout} style={styles.button}>
+            Proceed to Checkout
+          </button>
         </div>
       )}
     </div>
@@ -225,6 +254,5 @@ const styles: { [key: string]: React.CSSProperties } = {
     backgroundColor: '#f9f9f9',
     padding: '10px',
     borderRadius: '5px',
-    border: '1px solid #ddd',
   },
 };
