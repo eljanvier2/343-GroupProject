@@ -11,9 +11,8 @@ const warehouses = [
   { name: 'Warehouse 5', lat: 45.5300, lng: -73.545 },
 ];
 
-// Montreal center coordinates
 const MONTREAL_CENTER = { lat: 45.5017, lng: -73.5673 };
-const DELIVERY_RADIUS_KM = 10; // Updated delivery radius to 10 km
+const DELIVERY_RADIUS_KM = 10;
 
 const PaymentDelivery = () => {
   const router = useRouter();
@@ -25,7 +24,6 @@ const PaymentDelivery = () => {
   const [marker, setMarker] = useState<any>(null);
   const [price, setPrice] = useState<number | null>(null);
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
-
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {
@@ -51,7 +49,7 @@ const PaymentDelivery = () => {
 
       const mapElement = document.getElementById('map') as HTMLElement;
       const googleMap = new google.maps.Map(mapElement, {
-        center: { lat: 45.5017, lng: -73.5673 },
+        center: MONTREAL_CENTER,
         zoom: 13,
       });
       setMap(googleMap);
@@ -75,9 +73,8 @@ const PaymentDelivery = () => {
           lat: location.lat(),
           lng: location.lng(),
         });
-        setError(''); // Clear any previous error
+        setError('');
 
-        // Center map on selected location
         googleMap.setCenter(location);
         googleMarker.setPosition(location);
       });
@@ -142,21 +139,14 @@ const PaymentDelivery = () => {
 
     setNearestWarehouse(nearest);
 
-    // Calculate price
-    const distanceCost = minDistance * 0.5; // $0.5 per km
-    const weightCost = parseFloat(weight) * 1; // $1 per kg
-    const totalPrice = 5 + distanceCost + weightCost; // Base price + distance + weight
+    const distanceCost = minDistance * 0.5;
+    const weightCost = parseFloat(weight) * 1;
+    const totalPrice = 5 + distanceCost + weightCost;
     setPrice(totalPrice);
-
-    // Redirect to checkout with price
-    router.push({
-      pathname: '/checkout',
-      query: { amount: totalPrice.toFixed(2) },
-    });
   };
 
   const handleCheckout = () => {
-    router.push(`/checkout?price=${price}`);       // Redirect to checkout page with price
+    router.push(`/checkout?price=${price}`);
   };
 
   return (
