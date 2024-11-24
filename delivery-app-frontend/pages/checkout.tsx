@@ -1,33 +1,36 @@
-import { useEffect, useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from '@/components/CheckoutForm'
-import Head from 'next/head'
+import { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '@/components/CheckoutForm';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const CheckoutPage = () => {
-  const [clientSecret, setClientSecret] = useState('')
-  const amount = 10.00 // Example amount
+  const router = useRouter();
+  const { price } = router.query;
+  const [clientSecret, setClientSecret] = useState('');
+  const amount = price ? parseFloat(price as string) : 10.00; // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
 
   useEffect(() => {
     // Create PaymentIntent
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amount * 100 }) // Send amount in cents   //TODO: SET AMOUNT IN ENTIRE SYSTEM
+      body: JSON.stringify({ amount: amount * 100 }) // Send amount in cents
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret))
-  }, [amount])
+      .then((data) => setClientSecret(data.clientSecret));
+  }, [amount]);
 
   const appearance = {
     theme: 'stripe' as 'stripe',
-  }
+  };
   const options = {
     clientSecret,
     appearance,
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
@@ -56,7 +59,7 @@ const CheckoutPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;
