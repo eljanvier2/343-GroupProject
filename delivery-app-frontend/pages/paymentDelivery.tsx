@@ -16,6 +16,7 @@ const MONTREAL_CENTER = { lat: 45.5017, lng: -73.5673 };
 const DELIVERY_RADIUS_KM = 10; // Updated delivery radius to 10 km
 
 const PaymentDelivery = () => {
+  const router = useRouter();
   const [address, setAddress] = useState('');
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [weight, setWeight] = useState('');
@@ -24,7 +25,7 @@ const PaymentDelivery = () => {
   const [marker, setMarker] = useState<any>(null);
   const [price, setPrice] = useState<number | null>(null);
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
-  const router = useRouter();
+
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {
@@ -146,6 +147,12 @@ const PaymentDelivery = () => {
     const weightCost = parseFloat(weight) * 1; // $1 per kg
     const totalPrice = 5 + distanceCost + weightCost; // Base price + distance + weight
     setPrice(totalPrice);
+
+    // Redirect to checkout with price
+    router.push({
+      pathname: '/checkout',
+      query: { amount: totalPrice.toFixed(2) },
+    });
   };
 
   const handleCheckout = () => {
