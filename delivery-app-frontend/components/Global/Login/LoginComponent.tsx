@@ -1,21 +1,29 @@
-import React, { useState, type FormEvent } from 'react'
-import Image from 'next/image'
-import Logo from '@/public/images/dronelogo.svg'
-import DroneLogin from '@/public/images/dronelogin.jpg'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../../lib/firebase'
-import { useRouter } from 'next/router'
+import React, { useState, type FormEvent } from "react";
+import Image from "next/image";
+import Logo from "@/public/images/dronelogo.svg";
+import DroneLogin from "@/public/images/dronelogin.jpg";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../lib/firebase";
+import { useRouter } from "next/router";
+import { User } from "@/data";
 interface LoginProps {
-  showSignup: (value: boolean) => void
-  isAuthenticated: boolean
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  showSignup: (value: boolean) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (value: boolean) => void;
+  setUser: (value: any) => void;
+  user: User | null;
 }
 
-const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [rememberMe, setRememberMe] = useState(false)
-  const router = useRouter()
+const Login = ({
+  showSignup,
+  setIsAuthenticated,
+  setUser,
+  user,
+}: LoginProps): JSX.Element => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
 
   // useEffect(() => {
   //   const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -25,16 +33,21 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
   // }, []);
 
   const handleSignIn = async (e: FormEvent): Promise<void> => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password)
-      setIsAuthenticated(true)
-      void router.push('/dashboard')
+      await signInWithEmailAndPassword(auth, email, password).then(
+        (userCredentials) => {
+          setUser(userCredentials.user.uid);
+          setIsAuthenticated(true);
+          void router.push(`/dashboard?userId=${userCredentials.user.uid}`);
+        }
+      );
     } catch (error) {
-      console.error('Firebase sign-in error:', error)
+      console.error("Firebase sign-in error:", error);
+      alert("Invalid email or password");
     }
-  }
+  };
 
   return (
     <div>
@@ -61,11 +74,11 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
 
             <form
               onSubmit={(event) => {
-                void handleSignIn(event)
-                event.preventDefault()
+                void handleSignIn(event);
+                event.preventDefault();
               }}
               className="space-y-6">
-              {' '}
+              {" "}
               {/* Email */}
               <div>
                 <label
@@ -78,7 +91,7 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
                   id="email"
                   value={email}
                   onChange={(e) => {
-                    setEmail(e.target.value)
+                    setEmail(e.target.value);
                   }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="mail@abc.com"
@@ -97,7 +110,7 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
                   id="password"
                   value={password}
                   onChange={(e) => {
-                    setPassword(e.target.value)
+                    setPassword(e.target.value);
                   }}
                   className="mt-1 block w-full p-3 border border-customGrey rounded-md shadow-sm text-customBlack"
                   placeholder="•••••••••••••"
@@ -113,7 +126,7 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={() => {
-                      setRememberMe(!rememberMe)
+                      setRememberMe(!rememberMe);
                     }}
                     className="h-4 w-4 text-customGreen focus:ring-customGreen border-gray-300 rounded"
                   />
@@ -143,10 +156,10 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
             {/* Sign Up */}
             <div className="mt-6 text-center">
               <p className="text-sm text-customBlack">
-                Not Registered Yet?{' '}
+                Not Registered Yet?{" "}
                 <a
                   onClick={() => {
-                    showSignup(true)
+                    showSignup(true);
                   }}
                   className="text-customGreen hover:text-customLightGreen font-medium">
                   Create an account
@@ -157,7 +170,7 @@ const Login = ({ showSignup, setIsAuthenticated }: LoginProps): JSX.Element => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

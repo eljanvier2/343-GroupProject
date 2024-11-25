@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 interface NavbarLoginButtonProps {
   showLogin: (value: boolean) => void
   isAuthenticated: boolean
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  setIsAuthenticated: (value: boolean) => void
 }
 
 const NavbarLoginButton = ({

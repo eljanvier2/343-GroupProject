@@ -19,9 +19,9 @@ export const routes: Route[] = [
   {
     name: 'Contact Us',
     path: '/'
-  },
-  {
-    name: 'Order Tracking',
-    path: '/tracking'
   }
+  // {
+  //   name: 'Order Tracking',
+  //   path: '/tracking'
+  // }
 ]

@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 interface NavbarProps {
   showLogin: (value: boolean) => void
   isAuthenticated: boolean
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+  setIsAuthenticated: (value: boolean) => void
 }
 
 const Navbar = ({
@@ -24,7 +24,7 @@ const Navbar = ({
       <div className="w-1/3">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </div>
-      <div className="flex justify-between gap-5 items-center w-1/3">
+      <div className="flex justify-between items-center w-1/3">
         {routes.map((route, index) => {
           return (
             <NavbarButton
