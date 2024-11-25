@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
 import { useRouter } from "next/router";
 import { User } from "@/data";
+
 interface LoginProps {
   showSignup: (value: boolean) => void;
   isAuthenticated: boolean;
@@ -40,6 +41,7 @@ const Login = ({
         (userCredentials) => {
           setUser(userCredentials.user.uid);
           setIsAuthenticated(true);
+          localStorage.setItem("userId", userCredentials.user.uid);
           void router.push(`/dashboard?userId=${userCredentials.user.uid}`);
         }
       );

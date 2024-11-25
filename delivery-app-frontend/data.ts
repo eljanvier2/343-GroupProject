@@ -10,7 +10,7 @@ export interface Notification {
   id: string;
   titre: string;
   description: string;
-  type: string;
+  type: number;
 }
 
 export interface Delivery {

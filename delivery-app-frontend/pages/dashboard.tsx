@@ -28,16 +28,20 @@ const Dashboard = ({
 }: DashboardProps): JSX.Element => {
   const router = useRouter();
   useEffect(() => {
-    if (!isAuthenticated) {
-      void router.push("/");
-    }
+    // if (!isAuthenticated) {
+    //   void router.push("/");
+    // }
   });
   useEffect(() => {
     setUser(fetchedUser);
   }, [fetchedUser]);
   return (
     <div className="text-black">
-      {!isAuthenticated ? "Login failed" : <DashboardComponent />}
+      {
+        /* !isAuthenticated ? "Login failed" :  */ <DashboardComponent
+          user={user}
+        />
+      }
     </div>
   );
 };
@@ -56,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       );
       fetchedUser.notifications = notificationsSnapshot.docs.map((doc) => ({
         id: doc.id,
+        titre: doc.data().title,
         ...doc.data(),
       })) as Notification[];
 
