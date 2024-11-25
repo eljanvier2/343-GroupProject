@@ -9,8 +9,9 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const CheckoutPage = () => {
   const router = useRouter();
-  const { price } = router.query;
+  const { price, name, email, address } = router.query;
   const [clientSecret, setClientSecret] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
   const amount = price ? parseFloat(price as string) : 10.00; // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
 
   useEffect(() => {
@@ -18,11 +19,11 @@ const CheckoutPage = () => {
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amount * 100 }) // Send amount in cents
+      body: JSON.stringify({ amount: amount * 100, paymentMethod }) // Send amount in cents and payment method
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [amount]);
+  }, [amount, paymentMethod]);
 
   const appearance = {
     theme: 'stripe' as 'stripe',
@@ -50,9 +51,21 @@ const CheckoutPage = () => {
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-4">Payment</h2>
+            <div className="mb-4">
+              <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">Payment Method</label>
+              <select
+                id="paymentMethod"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              >
+                <option value="stripe">Stripe</option>
+                {/* Add other payment methods here */}
+              </select>
+            </div>
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm clientSecret={clientSecret} />
+                <CheckoutForm clientSecret={clientSecret} name={name as string} email={email as string} address={address as string} />
               </Elements>
             )}
           </div>

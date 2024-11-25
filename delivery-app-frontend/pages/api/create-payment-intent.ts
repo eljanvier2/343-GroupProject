@@ -1,9 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import Stripe from 'stripe'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-10-28.acacia',
-})
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PaymentContext } from '../../lib/paymentContext';
+import { StripePaymentStrategy } from '../../lib/stripePaymentStrategy';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,18 +8,28 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1000, // TODO: SET AMOUNT IN ENTIRE SYSTEM WITH VARIABLE 
-        currency: 'usd',
-      })
+      const { amount, paymentMethod } = req.body;
 
-      res.status(200).json({ clientSecret: paymentIntent.client_secret })
+      let paymentStrategy;
+      switch (paymentMethod) {
+        case 'stripe':
+          paymentStrategy = new StripePaymentStrategy();
+          break;
+        // Add other payment strategies here
+        default:
+          throw new Error('Invalid payment method');
+      }
+
+      const paymentContext = new PaymentContext(paymentStrategy);
+      const { clientSecret } = await paymentContext.createPaymentIntent(amount);
+
+      res.status(200).json({ clientSecret });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      res.status(500).json({ error: errorMessage })
+      res.status(500).json({ error: errorMessage });
     }
   } else {
-    res.setHeader('Allow', 'POST')
-    res.status(405).end('Method Not Allowed')
+    res.setHeader('Allow', 'POST');
+    res.status(405).end('Method Not Allowed');
   }
 }
