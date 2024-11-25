@@ -1,33 +1,37 @@
-import { useEffect, useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from '@/components/CheckoutForm'
-import Head from 'next/head'
+import { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '@/components/CheckoutForm';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const CheckoutPage = () => {
-  const [clientSecret, setClientSecret] = useState('')
-  const amount = 10.00 // Example amount
+  const router = useRouter();
+  const { price, name, email, address } = router.query;
+  const [clientSecret, setClientSecret] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const amount = price ? parseFloat(price as string) : 10.00; // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
 
   useEffect(() => {
     // Create PaymentIntent
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amount * 100 }) // Send amount in cents   //TODO: SET AMOUNT IN ENTIRE SYSTEM
+      body: JSON.stringify({ amount: amount * 100, paymentMethod }) // Send amount in cents and payment method
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret))
-  }, [amount])
+      .then((data) => setClientSecret(data.clientSecret));
+  }, [amount, paymentMethod]);
 
   const appearance = {
     theme: 'stripe' as 'stripe',
-  }
+  };
   const options = {
     clientSecret,
     appearance,
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
@@ -47,16 +51,28 @@ const CheckoutPage = () => {
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-4">Payment</h2>
+            <div className="mb-4">
+              <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">Payment Method</label>
+              <select
+                id="paymentMethod"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              >
+                <option value="stripe">Stripe</option>
+                {/* Add other payment methods here */}
+              </select>
+            </div>
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm clientSecret={clientSecret} />
+                <CheckoutForm clientSecret={clientSecret} name={name as string} email={email as string} address={address as string} />
               </Elements>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

@@ -13,9 +13,8 @@ const warehouses = [
   { name: 'Warehouse 5', lat: 45.5300, lng: -73.545 },
 ];
 
-// Montreal center coordinates
 const MONTREAL_CENTER = { lat: 45.5017, lng: -73.5673 };
-const DELIVERY_RADIUS_KM = 10; // Updated delivery radius to 10 km
+const DELIVERY_RADIUS_KM = 10;
 
 const PaymentDelivery = () => {
   const router = useRouter();
@@ -52,7 +51,7 @@ const PaymentDelivery = () => {
 
       const mapElement = document.getElementById('map') as HTMLElement;
       const googleMap = new google.maps.Map(mapElement, {
-        center: { lat: 45.5017, lng: -73.5673 },
+        center: MONTREAL_CENTER,
         zoom: 13,
       });
       setMap(googleMap);
@@ -76,9 +75,8 @@ const PaymentDelivery = () => {
           lat: location.lat(),
           lng: location.lng(),
         });
-        setError(''); // Clear any previous error
+        setError('');
 
-        // Center map on selected location
         googleMap.setCenter(location);
         googleMarker.setPosition(location);
       });
@@ -93,7 +91,8 @@ const PaymentDelivery = () => {
     const dLng = ((lng2 - lng1) * Math.PI) / 180;
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distance in km
   };
@@ -145,6 +144,7 @@ const PaymentDelivery = () => {
     }
 
     // Find the nearest warehouse
+
     let minDistance = Infinity;
     let nearest = null;
 
@@ -155,6 +155,7 @@ const PaymentDelivery = () => {
         warehouse.lat,
         warehouse.lng
       );
+
       if (distance < minDistance) {
         minDistance = distance;
         nearest = warehouse;
@@ -163,19 +164,25 @@ const PaymentDelivery = () => {
 
     setNearestWarehouse(nearest);
 
-    // Calculate price
-    const distanceCost = minDistance * 0.5; // $0.5 per km
-    const weightCost = parseFloat(weight) * 1; // $1 per kg
-    const totalPrice = 5 + distanceCost + weightCost; // Base price + distance + weight
+    const distanceCost = minDistance * 0.5;
+    const weightCost = parseFloat(weight) * 1;
+    const totalPrice = 5 + distanceCost + weightCost;
     setPrice(totalPrice);
 
     // Create delivery in Firestore
     await createDeliveryInFirestore(totalPrice, nearest);
 
-    // Redirect to checkout with price
+  };
+
+  const handleCheckout = () => {
+    if (!price) {
+      setError('Price is not calculated yet.');
+      return;
+    }
+  
     router.push({
       pathname: '/checkout',
-      query: { amount: totalPrice.toFixed(2) },
+      query: { amount: price.toFixed(2) },
     });
   };
 
@@ -211,6 +218,15 @@ const PaymentDelivery = () => {
         Plan Delivery
       </button>
       {error && <p style={styles.error}>{error}</p>}
+      {price && nearestWarehouse && (
+        <div style={styles.result}>
+          <p>Nearest Warehouse: {nearestWarehouse.name}</p>
+          <p>Price: ${price.toFixed(2)}</p>
+          <button onClick={handleCheckout} style={styles.button}>
+            Proceed to Checkout
+          </button>
+        </div>
+      )}
     </div>
   );
 };
@@ -265,5 +281,12 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: '#ff0000',
     marginTop: '10px',
     textAlign: 'center',
+  },
+  result: {
+    marginTop: '20px',
+    textAlign: 'center',
+    backgroundColor: '#f9f9f9',
+    padding: '10px',
+    borderRadius: '5px',
   },
 };

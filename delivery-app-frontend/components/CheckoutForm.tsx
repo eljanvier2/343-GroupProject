@@ -1,51 +1,60 @@
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
-import { useState } from 'react'
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { useState, useEffect } from 'react';
 
 interface CheckoutFormProps {
-  clientSecret: string
+  clientSecret: string;
+  name?: string;
+  email?: string;
+  address?: string;
 }
 
-const CheckoutForm = ({ clientSecret }: CheckoutFormProps) => {
-  const stripe = useStripe()
-  const elements = useElements()
+const CheckoutForm = ({ clientSecret, name: initialName, email: initialEmail, address: initialAddress }: CheckoutFormProps) => {
+  const stripe = useStripe();
+  const elements = useElements();
 
   // Form states for billing details
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [address, setAddress] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [name, setName] = useState(initialName || '');
+  const [email, setEmail] = useState(initialEmail || '');
+  const [address, setAddress] = useState(initialAddress || '');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setName(initialName || '');
+    setEmail(initialEmail || '');
+    setAddress(initialAddress || '');
+  }, [initialName, initialEmail, initialAddress]);
 
   const validateForm = () => {
     if (!name || !email || !address) {
-      setError('All billing details must be filled out.')
-      return false
+      setError('All billing details must be filled out.');
+      return false;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError('Invalid email address.')
-      return false
+      setError('Invalid email address.');
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (!stripe || !elements) {
-      return
+      return;
     }
 
     if (!validateForm()) {
-      return
+      return;
     }
 
-    setError(null) // Clear previous errors
-    setLoading(true)
+    setError(null); // Clear previous errors
+    setLoading(true);
 
-    const cardElement = elements.getElement(CardElement)
+    const cardElement = elements.getElement(CardElement);
 
     const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
@@ -56,18 +65,18 @@ const CheckoutForm = ({ clientSecret }: CheckoutFormProps) => {
           address: { line1: address },
         },
       },
-    })
+    });
 
     if (error) {
-      setError(error.message || 'An unknown error occurred')
+      setError(error.message || 'An unknown error occurred');
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      window.location.href = '/payment-success'
+      window.location.href = '/payment-success';
     } else {
-      setError('Payment failed. Please try again.')
+      setError('Payment failed. Please try again.');
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -110,7 +119,7 @@ const CheckoutForm = ({ clientSecret }: CheckoutFormProps) => {
         {loading ? 'Processing...' : 'Pay'}
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default CheckoutForm
+export default CheckoutForm;
