@@ -52,6 +52,7 @@ const Layout = ({
   return (
     <div className="relative">
       <Navbar
+      dashboard={currentRoute === "/dashboard"}
         showLogin={(value: boolean) => {
           setShowLogin(value);
         }}

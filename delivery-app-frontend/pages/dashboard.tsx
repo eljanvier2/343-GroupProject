@@ -36,7 +36,7 @@ const Dashboard = ({
     setUser(fetchedUser);
   }, [fetchedUser]);
   return (
-    <div className="text-black">
+    <div className="text-black pt-4">
       {
         /* !isAuthenticated ? "Login failed" :  */ <DashboardComponent
           user={user}

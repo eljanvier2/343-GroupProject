@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { routes } from './config'
+import { routes, dashboardRoutes } from './config'
 import NavbarButton from './NavbarButton'
 import Logo from '@/public/images/dronelogo.svg'
 import NavbarLoginButton from './NavbarLoginButton'
@@ -10,22 +10,24 @@ interface NavbarProps {
   showLogin: (value: boolean) => void
   isAuthenticated: boolean
   setIsAuthenticated: (value: boolean) => void
+  dashboard: boolean
 }
 
 const Navbar = ({
   showLogin,
   isAuthenticated,
-  setIsAuthenticated
+  setIsAuthenticated,
+  dashboard
 }: NavbarProps): JSX.Element => {
   const router = typeof window !== 'undefined' ? useRouter() : undefined
-
+  const usedRoutes = dashboard ? dashboardRoutes : routes
   return (
     <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
       <div className="w-1/3">
         <Image src={Logo} alt="logo" width={100} height={100} />
       </div>
       <div className="flex justify-between items-center w-1/3">
-        {routes.map((route, index) => {
+        {usedRoutes.map((route, index) => {
           return (
             <NavbarButton
               text={route.name}
