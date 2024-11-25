@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { collection, doc, addDoc } from 'firebase/firestore'
+import { db} from '../lib/firebase'
 
 declare const google: any;
 
@@ -96,7 +98,30 @@ const PaymentDelivery = () => {
     return R * c; // Distance in km
   };
 
-  const handlePlanDelivery = () => {
+  const createDeliveryInFirestore = async (totalPrice: number, nearest: any) => {
+    try {
+      const userId = 'LRVUhOLhrff4hTgct1x5VjMFgpJ3 '; // taken from firebase db
+      const userDocRef = doc(collection(db, 'users'), userId);
+      const deliveriesRef = collection(userDocRef, 'deliveries');
+
+      const deliveryObject = {
+        departure: new Date(),
+        from: [nearest.lat, nearest.lng],
+        to: [coordinates!.lat, coordinates!.lng],
+        weight: parseFloat(weight),
+        address,
+        price: totalPrice,
+      };
+
+      await addDoc(deliveriesRef, deliveryObject);
+      console.log('Delivery created successfully:', deliveryObject);
+    } catch (err) {
+      console.error('Error creating delivery in Firestore:', err);
+      setError('Failed to create delivery. Please try again.');
+    }
+  };
+
+  const handlePlanDelivery = async () => {
     if (!coordinates) {
       setError('Please select a valid address.');
       return;
@@ -143,6 +168,9 @@ const PaymentDelivery = () => {
     const weightCost = parseFloat(weight) * 1; // $1 per kg
     const totalPrice = 5 + distanceCost + weightCost; // Base price + distance + weight
     setPrice(totalPrice);
+
+    // Create delivery in Firestore
+    await createDeliveryInFirestore(totalPrice, nearest);
 
     // Redirect to checkout with price
     router.push({
