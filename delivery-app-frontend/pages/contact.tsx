@@ -2,12 +2,15 @@ import ContactComponent from '@/components/Contact/contact';
 import React from 'react';
 
 interface ContactProps {
+    isAuthenticated: boolean;
 }
 
-const Contact = ({}: ContactProps): JSX.Element => {
+const Contact = ({
+    isAuthenticated
+}: ContactProps): JSX.Element => {
   return (
     <div>
-        <ContactComponent />
+        <ContactComponent isAuthenticated={isAuthenticated} />
     </div>
   );
 }
