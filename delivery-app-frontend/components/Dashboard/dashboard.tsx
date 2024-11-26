@@ -15,8 +15,8 @@ const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
       <Box title="Notifications">
         <Notifications notifications={user?.notifications || []} />
       </Box>
-      <Box title="Map">{"Prout"}</Box>
-      <Box title="Settings">{"Prout"}</Box>
+      {/* <Box title="Map">{"Prout"}</Box> */}
+      {/* <Box title="Settings">{"Prout"}</Box> */}
     </div>
   );
 };
