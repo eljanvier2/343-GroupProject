@@ -24,7 +24,7 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
       void createUserWithEmailAndPassword(auth, email, password).then(() => {
         showSignup(false)
       })
-    } catch (error) {
+    } catch (error:any) {
       console.error('Error creating user:', error)
       alert(error.message)
     }
