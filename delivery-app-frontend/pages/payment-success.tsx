@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
-import Head from 'next/head'
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const PaymentSuccess = () => {
-  const router = useRouter()
-  const { amount } = router.query
+  const router = useRouter();
+  const { amount } = router.query;
 
   //TODO: GENERATE UNIQUE ORDER ID AND STORE IN DATABASE
   return (
@@ -22,7 +22,7 @@ const PaymentSuccess = () => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentSuccess
+export default PaymentSuccess;
