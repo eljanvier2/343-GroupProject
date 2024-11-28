@@ -12,6 +12,8 @@ const CheckoutPage = () => {
   const { price, name, email, address } = router.query;
   const [clientSecret, setClientSecret] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const amount = price ? parseFloat(price as string) : 10.00; // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
 
   useEffect(() => {
@@ -19,10 +21,18 @@ const CheckoutPage = () => {
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amount * 100, paymentMethod }) // Send amount in cents and payment method
+      body: JSON.stringify({ amount: Math.round(amount * 100), paymentMethod }) // Convert amount to cents and ensure it's an integer
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => {
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          setError('Failed to get client secret: ' + data.error);
+        }
+      })
+      .catch((error) => setError('Error fetching client secret: ' + error.message))
+      .finally(() => setLoading(false));
   }, [amount, paymentMethod]);
 
   const appearance = {
@@ -63,10 +73,16 @@ const CheckoutPage = () => {
                 {/* Add other payment methods here */}
               </select>
             </div>
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm clientSecret={clientSecret} name={name as string} email={email as string} address={address as string} />
-              </Elements>
+            {loading ? (
+              <div>Loading payment details...</div>
+            ) : error ? (
+              <div className="text-red-500">{error}</div>
+            ) : (
+              clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutForm clientSecret={clientSecret} name={name as string} email={email as string} address={address as string} />
+                </Elements>
+              )
             )}
           </div>
         </div>

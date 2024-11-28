@@ -1,76 +1,58 @@
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/router';
 
 interface CheckoutFormProps {
   clientSecret: string;
-  name?: string;
-  email?: string;
-  address?: string;
+  name: string;
+  email: string;
+  address: string;
 }
 
-const CheckoutForm = ({ clientSecret, name: initialName, email: initialEmail, address: initialAddress }: CheckoutFormProps) => {
+const CheckoutForm = ({ clientSecret, name, email, address }: CheckoutFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  // Form states for billing details
-  const [name, setName] = useState(initialName || '');
-  const [email, setEmail] = useState(initialEmail || '');
-  const [address, setAddress] = useState(initialAddress || '');
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setName(initialName || '');
-    setEmail(initialEmail || '');
-    setAddress(initialAddress || '');
-  }, [initialName, initialEmail, initialAddress]);
-
-  const validateForm = () => {
-    if (!name || !email || !address) {
-      setError('All billing details must be filled out.');
-      return false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Invalid email address.');
-      return false;
-    }
-
-    return true;
-  };
+  const [nameState, setName] = useState(name);
+  const [emailState, setEmail] = useState(email);
+  const [addressState, setAddress] = useState(address);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!stripe || !elements) {
+      setLoading(false);
       return;
     }
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setError(null); // Clear previous errors
-    setLoading(true);
 
     const cardElement = elements.getElement(CardElement);
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+    if (!cardElement) {
+      setLoading(false);
+      return;
+    }
+
+    const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: cardElement!,
+        card: cardElement,
         billing_details: {
-          name,
-          email,
-          address: { line1: address },
+          name: nameState,
+          email: emailState,
+          address: {
+            line1: addressState,
+          },
         },
       },
     });
 
-    if (error) {
-      setError(error.message || 'An unknown error occurred');
+    if (stripeError) {
+      setError(stripeError.message || 'Payment failed. Please try again.');
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      window.location.href = '/payment-success';
+      setError(null);
+      router.push('/payment-success');
     } else {
       setError('Payment failed. Please try again.');
     }
@@ -84,7 +66,7 @@ const CheckoutForm = ({ clientSecret, name: initialName, email: initialEmail, ad
         <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
-          value={name}
+          value={nameState}
           onChange={(e) => setName(e.target.value)}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
         />
@@ -93,7 +75,7 @@ const CheckoutForm = ({ clientSecret, name: initialName, email: initialEmail, ad
         <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
           type="email"
-          value={email}
+          value={emailState}
           onChange={(e) => setEmail(e.target.value)}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
         />
@@ -102,19 +84,20 @@ const CheckoutForm = ({ clientSecret, name: initialName, email: initialEmail, ad
         <label className="block text-sm font-medium text-gray-700">Address</label>
         <input
           type="text"
-          value={address}
+          value={addressState}
           onChange={(e) => setAddress(e.target.value)}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
         />
       </div>
-      <div className="border p-4 rounded-lg shadow-sm">
-        <CardElement className="p-2" />
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Card Details</label>
+        <CardElement className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" />
       </div>
       {error && <div className="text-red-500 text-sm">{error}</div>}
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+        className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md shadow-sm hover:bg-blue-600 transition-colors"
       >
         {loading ? 'Processing...' : 'Pay'}
       </button>
