@@ -8,6 +8,7 @@ export const dashboardRoutes: Route[] = [
     name: "Tracking",
     path: "/tracking",
   },
+  {name: "Plan Delivery", path: "/paymentDelivery"},
   { name: "Dashboard", path: "/dashboard" },
   { name: "Contact Us", path: "/contact" },
 ];

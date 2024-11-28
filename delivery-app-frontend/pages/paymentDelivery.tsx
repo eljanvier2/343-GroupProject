@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { collection, doc, addDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { User } from "@/data";
 
 declare const google: any;
 
@@ -16,7 +17,7 @@ const warehouses = [
 const MONTREAL_CENTER = { lat: 45.5017, lng: -73.5673 };
 const DELIVERY_RADIUS_KM = 10;
 
-const PaymentDelivery = () => {
+const PaymentDelivery = ({user}: {user: User}) => {
   const router = useRouter();
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState<{
@@ -29,6 +30,12 @@ const PaymentDelivery = () => {
   const [marker, setMarker] = useState<any>(null);
   const [price, setPrice] = useState<number | null>(null);
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
+
+  useEffect(() => {
+    if (!user || !user.id) {
+      void router.push("/");
+    }
+  })
 
   useEffect(() => {
     const loadGoogleMapsScript = () => {
@@ -112,8 +119,7 @@ const PaymentDelivery = () => {
     nearest: any
   ) => {
     try {
-      const userId = "LRVUhOLhrff4hTgct1x5VjMFgpJ3 "; // taken from firebase db
-      const userDocRef = doc(collection(db, "users"), userId);
+      const userDocRef = doc(collection(db, "users"), user.id);
       const deliveriesRef = collection(userDocRef, "deliveries");
 
       const deliveryObject = {
