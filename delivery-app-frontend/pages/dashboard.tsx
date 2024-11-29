@@ -64,26 +64,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ...doc.data(),
       })) as Notification[];
 
-      // const deliveriesSnapshot = await getDocs(
-      //   collection(db, "users", userId as string, "deliveries")
-      // );
-      // fetchedUser.deliveries = deliveriesSnapshot.docs.map((doc) => {
-      //   const data = doc.data();
-      //   return {
-      //     id: doc.id,
-      //     departure: (data.departure as Timestamp).toDate().toISOString(),
-      //     from: {
-      //       latitude: (data.from as GeoPoint).latitude,
-      //       longitude: (data.from as GeoPoint).longitude,
-      //     },
-      //     to: {
-      //       latitude: (data.to as GeoPoint).latitude,
-      //       longitude: (data.to as GeoPoint).longitude,
-      //     },
-      //     status: data.status,
-      //     weight: data.weight,
-      //   };
-      // }) as Delivery[];
+      const deliveriesSnapshot = await getDocs(
+        collection(db, "users", userId as string, "deliveries")
+      );
+      fetchedUser.deliveries = deliveriesSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        console.log(data);
+        return {
+          id: doc.id,
+          trackingId: data.trackingId ?? null,
+          departure: data.departure instanceof Timestamp ? data.departure.toDate().toISOString() : null,
+          from: data.from ? {
+            latitude: data.from[0] ?? null,
+            longitude: data.from[1] ?? null,
+          } : null,
+          to: data.to ? {
+            latitude: data.to[0] ?? null,
+            longitude: data.to[1] ?? null,
+          } : null,
+          status: data.status ?? null,
+          weight: data.weight ?? null,
+        };
+      }) as Delivery[];
     }
   }
   return {

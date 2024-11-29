@@ -11,7 +11,7 @@ const Box = ({ title, children }: BoxProps): JSX.Element => {
       <h1 className="text-2xl font-bold text-customBlack self-start">
         {title}
       </h1>
-      <div className="pl-2">{children}</div>
+      <div className="pl-2 w-full">{children}</div>
     </div>
   );
 };

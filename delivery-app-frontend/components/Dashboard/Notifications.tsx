@@ -7,7 +7,6 @@ interface NotificationsProps {
 }
 
 const Notifications = ({ notifications }: NotificationsProps): JSX.Element => {
-  console.log(notifications);
   useEffect(() => {}, [notifications]);
   return (
     <div className="w-min-content space-y-2">

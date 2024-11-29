@@ -20,4 +20,5 @@ export interface Delivery {
   to: { latitude: number; longitude: number };
   status: string;
   weight: number;
+  trackingId: string;
 }
