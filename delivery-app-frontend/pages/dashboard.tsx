@@ -36,7 +36,7 @@ const Dashboard = ({
     setUser(fetchedUser);
   }, [fetchedUser]);
   return (
-    <div className="text-black pt-4">
+    <div className="text-black pt-4 flex items-center justify-center">
       {
         /* !isAuthenticated ? "Login failed" :  */ <DashboardComponent
           user={user}
@@ -69,7 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       );
       fetchedUser.deliveries = deliveriesSnapshot.docs.map((doc) => {
         const data = doc.data();
-        console.log(data);
         return {
           id: doc.id,
           trackingId: data.trackingId ?? null,

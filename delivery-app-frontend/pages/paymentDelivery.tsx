@@ -132,7 +132,6 @@ const PaymentDelivery = ({user}: {user: User}) => {
       };
 
       await addDoc(deliveriesRef, deliveryObject);
-      console.log("Delivery created successfully:", deliveryObject);
     } catch (err) {
       console.error("Error creating delivery in Firestore:", err);
       setError("Failed to create delivery. Please try again.");

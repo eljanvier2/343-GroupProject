@@ -10,7 +10,6 @@ interface DashboardComponentProps {
 }
 
 const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
-  console.log(user?.deliveries);
   return (
     <div className="flex space-x-4">
       <div className="flex flex-col space-y-4">
@@ -20,11 +19,11 @@ const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
         <Box title="Settings">{"Prout"}</Box>
       </div>
       <div className="flex flex-col space-y-4">
-        <Box title="Notifications">
-          <Notifications notifications={user?.notifications || []} />
-        </Box>
         <Box title="Deliveries">
           <Deliveries deliveries={user?.deliveries || []} />
+        </Box>
+        <Box title="Notifications">
+          <Notifications notifications={user?.notifications || []} />
         </Box>
       </div>
     </div>
