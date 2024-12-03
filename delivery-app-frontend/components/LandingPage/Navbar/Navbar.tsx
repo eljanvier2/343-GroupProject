@@ -27,14 +27,16 @@ const Navbar = ({
   useEffect(() => {
     // find if route with name 'Dashboard' exists and remove it if !isAuthenticated
     const index = usedRoutes.findIndex((route) => route.name === "Dashboard");
-    if ((!isAuthenticated && getCookie('userId') === null) && index !== -1) {
+    if ((!isAuthenticated && getCookie('userId') === undefined) && index !== -1) {
       usedRoutes.splice(index, 1);
     }
   })
 
   return (
     <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
-      <div className="w-1/3">
+      <div className="w-1/3 cursor-pointer" onClick={() => {
+        void router?.push('/')
+      }}>
         <Image src={Logo} alt="logo" width={100} height={100} />
       </div>
       <div className="flex justify-between items-center w-1/3">

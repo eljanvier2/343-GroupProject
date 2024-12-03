@@ -29,7 +29,7 @@ const Dashboard = ({
 }: DashboardProps): JSX.Element => {
   const router = useRouter();
   useEffect(() => {
-    if (!isAuthenticated && getCookie('userId') === null) {
+    if (!isAuthenticated && getCookie('userId') === undefined) {
       void router.push("/");
     }
   });

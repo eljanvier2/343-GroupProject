@@ -33,7 +33,7 @@ const PaymentDelivery = ({user}: {user: User}) => {
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
 
   useEffect(() => {
-    if ((!user || !user.id) && getCookie('userId') === null) {
+    if ((!user || !user.id) && getCookie('userId') === undefined) {
       void router.push("/");
     }
   })

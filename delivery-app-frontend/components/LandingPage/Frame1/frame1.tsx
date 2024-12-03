@@ -13,7 +13,7 @@ const Frame1 = ({ isAuthenticated }: Frame1Props): JSX.Element => {
   const router = useRouter();
 
   const handlePlanDeliveryClick = () => {
-    if (!isAuthenticated && getCookie('userId') === null) {
+    if (!isAuthenticated && getCookie('userId') === undefined) {
       alert("Please login or create an account to plan your delivery.");
       return;
     }
