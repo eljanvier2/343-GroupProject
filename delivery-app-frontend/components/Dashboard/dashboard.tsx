@@ -16,7 +16,7 @@ const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
         <Box title="Tracking">
           <TrackingComponent />
         </Box>
-        <Box title="Settings">{"Prout"}</Box>
+        {/* <Box title="Settings">{"Prout"}</Box> */}
       </div>
       <div className="flex flex-col space-y-4">
         <Box title="Deliveries">

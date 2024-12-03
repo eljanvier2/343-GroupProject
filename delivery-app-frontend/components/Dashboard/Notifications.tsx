@@ -16,7 +16,8 @@ const Notifications = ({ notifications }: NotificationsProps): JSX.Element => {
           {index < notifications.length - 1 && (
             <hr className="my-2 border-t w-full border-gray-300" />
           )}
-        </React.Fragment>      ))}
+        </React.Fragment>
+      ))}
     </div>
   );
 };

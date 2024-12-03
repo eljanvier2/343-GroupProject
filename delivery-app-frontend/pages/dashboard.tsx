@@ -48,9 +48,11 @@ const Dashboard = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId } = context.query;
+  let { userId } = context.query;
   let fetchedUser = null;
-
+  if (!userId) {
+    userId = getCookie('userId')
+  }
   if (userId) {
     const userDoc = await getDoc(doc(db, "users", userId as string));
     if (userDoc.exists()) {
