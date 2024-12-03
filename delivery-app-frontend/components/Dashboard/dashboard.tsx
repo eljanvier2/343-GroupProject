@@ -1,12 +1,12 @@
-import React from "react";
-import Box from "./DashboardBox";
-import { User } from "@/data";
-import Notifications from "./Notifications";
-import TrackingComponent from "./TrackingComponent";
-import Deliveries from "./Deliveries";
+import React from 'react'
+import Box from './DashboardBox'
+import { type User } from '@/data'
+import Notifications from './Notifications'
+import TrackingComponent from './TrackingComponent'
+import Deliveries from './Deliveries'
 
 interface DashboardComponentProps {
-  user: User | null;
+  user: User | null
 }
 
 const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
@@ -16,7 +16,7 @@ const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
         <Box title="Tracking">
           <TrackingComponent />
         </Box>
-        <Box title="Settings">{"Prout"}</Box>
+        <Box title="Settings">{'Prout'}</Box>
       </div>
       <div className="flex flex-col space-y-4">
         <Box title="Deliveries">
@@ -27,7 +27,7 @@ const DashboardComponent = ({ user }: DashboardComponentProps): JSX.Element => {
         </Box>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardComponent;
+export default DashboardComponent

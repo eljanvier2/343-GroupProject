@@ -1,12 +1,12 @@
-import React from "react";
-import { Notification } from "@/data";
+import React from 'react'
+import { type Notification } from '@/data'
 
 interface NotificationBoxProps {
-  notification: Notification;
+  notification: Notification
 }
 
 const NotificationBox = ({
-  notification,
+  notification
 }: NotificationBoxProps): JSX.Element => {
   return (
     <div className="w-[25vw] flex items-center space-x-2">
@@ -15,10 +15,10 @@ const NotificationBox = ({
         style={{
           backgroundColor:
             notification.type === 0
-              ? "red"
+              ? 'red'
               : notification.type === 1
-              ? "orange"
-              : "green",
+                ? 'orange'
+                : 'green'
         }}
       />
       <div className="flex flex-col">
@@ -26,7 +26,7 @@ const NotificationBox = ({
         <div>{notification.description}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NotificationBox;
+export default NotificationBox

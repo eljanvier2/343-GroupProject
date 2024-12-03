@@ -1,25 +1,25 @@
-import React from "react";
-import InputWithTitle from "../Global/InputWithTitle";
-import SelectWithTitle from "../Global/SelectWithTitle";
-import RoundButton from "../Global/RoundButton";
-import { useRouter } from "next/router";
+import React from 'react'
+import InputWithTitle from '../Global/InputWithTitle'
+import SelectWithTitle from '../Global/SelectWithTitle'
+import RoundButton from '../Global/RoundButton'
+import { useRouter } from 'next/router'
 
 interface ContactComponentProps {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean
 }
 
 const ContactComponent = ({
-  isAuthenticated,
+  isAuthenticated
 }: ContactComponentProps): JSX.Element => {
-  const router = useRouter();
-  const [success, setSuccess] = React.useState(false);
+  const router = useRouter()
+  const [success, setSuccess] = React.useState(false)
   const [formData, setFormData] = React.useState({
-    name: "",
-    email: "",
-    message: "",
-    subject: "",
-    deliveryId: "",
-  });
+    name: '',
+    email: '',
+    message: '',
+    subject: '',
+    deliveryId: ''
+  })
 
   return (
     <div className="h-full">
@@ -32,21 +32,21 @@ const ContactComponent = ({
                 title="Name"
                 placeholder="Your name"
                 onChange={(e) => {
-                  setFormData({ ...formData, name: e });
+                  setFormData({ ...formData, name: e })
                 }}
               />
               <SelectWithTitle
                 title="Subject of your message"
                 onChange={() => {}}
                 placeholder="Select a subject"
-                options={["General", "Delivery", "Other"]}
+                options={['General', 'Delivery', 'Other']}
               />
               <InputWithTitle
                 title="Message"
                 placeholder="Your message"
                 type="area"
                 onChange={(e) => {
-                  setFormData({ ...formData, message: e });
+                  setFormData({ ...formData, message: e })
                 }}
               />
             </div>
@@ -56,14 +56,14 @@ const ContactComponent = ({
                 placeholder="Your email"
                 type="email"
                 onChange={(e) => {
-                  setFormData({ ...formData, email: e });
+                  setFormData({ ...formData, email: e })
                 }}
               />
               <InputWithTitle
                 title="Delivery ID"
                 placeholder="Your delivery ID"
                 onChange={(e) => {
-                  setFormData({ ...formData, deliveryId: e });
+                  setFormData({ ...formData, deliveryId: e })
                 }}
               />
             </div>
@@ -73,14 +73,14 @@ const ContactComponent = ({
               text="Send"
               onClick={() => {
                 if (
-                  formData.name === "" ||
-                  formData.email === "" ||
-                  formData.message === ""
+                  formData.name === '' ||
+                  formData.email === '' ||
+                  formData.message === ''
                 ) {
-                  alert("Please fill all fields");
-                  return;
+                  alert('Please fill all fields')
+                  return
                 }
-                setSuccess(true);
+                setSuccess(true)
               }}
             />
           </div>
@@ -88,17 +88,17 @@ const ContactComponent = ({
       )}
       {success && (
         <div className="h-full w-full flex-col justify-center items-center text-header2 text-center">
-          <div className="">{"Your message has been sent successfully"}</div>
+          <div className="">{'Your message has been sent successfully'}</div>
           <RoundButton
-            text={isAuthenticated ? "Go back to dashboard" : "Go back to Home page"}
+            text={isAuthenticated ? 'Go back to dashboard' : 'Go back to Home page'}
             onClick={() => {
-              void router.push(isAuthenticated ? "/dashboard" : "/");
+              void router.push(isAuthenticated ? '/dashboard' : '/')
             }}
           />
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ContactComponent;
+export default ContactComponent

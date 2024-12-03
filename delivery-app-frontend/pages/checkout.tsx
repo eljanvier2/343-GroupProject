@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from '@/components/CheckoutForm';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+import CheckoutForm from '@/components/CheckoutForm'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const CheckoutPage = () => {
-  const router = useRouter();
-  const { price, name, email, address } = router.query;
-  const [clientSecret, setClientSecret] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('stripe');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const amount = price ? parseFloat(price as string) : 10.00; // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
+  const router = useRouter()
+  const { price, name, email, address } = router.query
+  const [clientSecret, setClientSecret] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('stripe')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const amount = price ? parseFloat(price as string) : 10.00 // AMOUNT FROM DELIVERY PLANNING/ EXAMPLE
 
   useEffect(() => {
     // Create PaymentIntent
@@ -23,25 +23,25 @@ const CheckoutPage = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: Math.round(amount * 100), paymentMethod }) // Convert amount to cents and ensure it's an integer
     })
-      .then((res) => res.json())
+      .then(async (res) => await res.json())
       .then((data) => {
         if (data.clientSecret) {
-          setClientSecret(data.clientSecret);
+          setClientSecret(data.clientSecret)
         } else {
-          setError('Failed to get client secret: ' + data.error);
+          setError('Failed to get client secret: ' + data.error)
         }
       })
-      .catch((error) => setError('Error fetching client secret: ' + error.message))
-      .finally(() => setLoading(false));
-  }, [amount, paymentMethod]);
+      .catch((error) => { setError('Error fetching client secret: ' + error.message) })
+      .finally(() => { setLoading(false) })
+  }, [amount, paymentMethod])
 
   const appearance = {
-    theme: 'stripe' as 'stripe',
-  };
+    theme: 'stripe' as const
+  }
   const options = {
     clientSecret,
-    appearance,
-  };
+    appearance
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
@@ -66,29 +66,33 @@ const CheckoutPage = () => {
               <select
                 id="paymentMethod"
                 value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
+                onChange={(e) => { setPaymentMethod(e.target.value) }}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
               >
                 <option value="stripe">Stripe</option>
                 {/* Add other payment methods here */}
               </select>
             </div>
-            {loading ? (
+            {loading
+              ? (
               <div>Loading payment details...</div>
-            ) : error ? (
+                )
+              : error
+                ? (
               <div className="text-red-500">{error}</div>
-            ) : (
-              clientSecret && (
+                  )
+                : (
+                    clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutForm clientSecret={clientSecret} name={name as string} email={email as string} address={address as string} />
                 </Elements>
-              )
-            )}
+                    )
+                  )}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CheckoutPage;
+export default CheckoutPage

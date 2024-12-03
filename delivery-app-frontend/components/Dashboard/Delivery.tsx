@@ -1,19 +1,19 @@
-import { Delivery } from "@/data";
-import React from "react";
+import { type Delivery } from '@/data'
+import React from 'react'
 
 interface DeliveryComponentProps {
-  delivery: Delivery;
+  delivery: Delivery
 }
 
 const DeliveryComponent = ({
-  delivery,
+  delivery
 }: DeliveryComponentProps): JSX.Element => {
   return (
     <div className="flex flex-col">
       <div className="font-medium">#{delivery.trackingId}</div>
       <div>Status: {delivery.status}</div>
     </div>
-  );
-};
+  )
+}
 
-export default DeliveryComponent;
+export default DeliveryComponent

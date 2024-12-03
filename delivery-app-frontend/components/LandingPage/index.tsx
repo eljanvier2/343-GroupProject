@@ -8,7 +8,7 @@ import CostCalculator from './CostCalculator/costCalculator'
 const IndexComponent = (): JSX.Element => {
   return (
     <div className="flex flex-col justify-center uppercase space-y-40">
-      <Frame1 />
+      <Frame1 isAuthenticated={true} />
       <Frame2 />
       <Frame3 />
       <Frame4 />

@@ -1,13 +1,13 @@
-import { Delivery } from "@/data";
-import React from "react";
-import DeliveryComponent from "./Delivery";
+import { type Delivery } from '@/data'
+import React from 'react'
+import DeliveryComponent from './Delivery'
 
 interface DeliveriesProps {
-  deliveries: Delivery[];
+  deliveries: Delivery[]
 }
 
 const Deliveries = ({ deliveries }: DeliveriesProps): JSX.Element => {
-  deliveries = deliveries.filter((delivery) => delivery.trackingId);
+  deliveries = deliveries.filter((delivery) => delivery.trackingId)
   return (
     <div className="w-full">
       {deliveries.map((delivery, index) => {
@@ -19,11 +19,11 @@ const Deliveries = ({ deliveries }: DeliveriesProps): JSX.Element => {
                 <hr className="my-2 border-t w-full border-gray-300" />
               )}
             </div>
-          );
+          )
         }
       })}
     </div>
-  );
-};
+  )
+}
 
-export default Deliveries;
+export default Deliveries

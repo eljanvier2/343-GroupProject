@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
 interface BoxProps {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: React.ReactNode
 }
 
 const Box = ({ title, children }: BoxProps): JSX.Element => {
@@ -13,7 +13,7 @@ const Box = ({ title, children }: BoxProps): JSX.Element => {
       </h1>
       <div className="pl-2 w-full">{children}</div>
     </div>
-  );
-};
+  )
+}
 
-export default Box;
+export default Box
