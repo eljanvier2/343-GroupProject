@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 import Drone from "@/public/images/drone.png";
 import RoundButton from "@/components/Global/RoundButton";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
+import { getCookie } from "cookies-next/client";
 
 interface Frame1Props {
   isAuthenticated: boolean;
@@ -12,13 +13,13 @@ const Frame1 = ({ isAuthenticated }: Frame1Props): JSX.Element => {
   const router = useRouter();
 
   const handlePlanDeliveryClick = () => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && getCookie('userId') === null) {
       alert("Please login or create an account to plan your delivery.");
       return;
     }
     router.push("/paymentDelivery");
   };
-
+  console.log(getCookie('userId'),'aaaaaaaaaaaaaaaaa')
   return (
     <div className="flex flex-col items-center">
       <div className="flex-col uppercase text-center -space-y-2">

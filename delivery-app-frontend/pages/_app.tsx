@@ -4,8 +4,9 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Instrument_Sans } from "next/font/google";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { getCookie } from "cookies-next/client";
 
 export const Instrument = Instrument_Sans({
   subsets: ["latin"],
@@ -15,6 +16,13 @@ export const Instrument = Instrument_Sans({
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const userId = getCookie('userId')
+    if (userId) {
+      setIsAuthenticated(true)
+    }
+  }, [])
   return (
     <div>
       <Head>

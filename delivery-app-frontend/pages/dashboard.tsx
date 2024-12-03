@@ -12,6 +12,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { Delivery, User, Notification } from "@/data";
+import { getCookie } from "cookies-next/client";
 
 interface DashboardProps {
   isAuthenticated: boolean;
@@ -28,9 +29,9 @@ const Dashboard = ({
 }: DashboardProps): JSX.Element => {
   const router = useRouter();
   useEffect(() => {
-    // if (!isAuthenticated) {
-    //   void router.push("/");
-    // }
+    if (!isAuthenticated && getCookie('userId') === null) {
+      void router.push("/");
+    }
   });
   useEffect(() => {
     setUser(fetchedUser);

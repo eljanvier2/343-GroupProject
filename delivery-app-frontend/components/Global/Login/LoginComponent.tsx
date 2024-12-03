@@ -4,8 +4,9 @@ import Logo from "@/public/images/dronelogo.svg";
 import DroneLogin from "@/public/images/dronelogin.jpg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../lib/firebase";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import { User } from "@/data";
+import { setCookie } from "cookies-next/client"
 
 interface LoginProps {
   showSignup: (value: boolean) => void;
@@ -41,7 +42,7 @@ const Login = ({
         (userCredentials) => {
           setUser(userCredentials.user.uid);
           setIsAuthenticated(true);
-          localStorage.setItem("userId", userCredentials.user.uid);
+          setCookie('userId', userCredentials.user.uid, { path: '/' });
           void router.push(`/dashboard?userId=${userCredentials.user.uid}`);
         }
       );

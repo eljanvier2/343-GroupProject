@@ -4,6 +4,7 @@ import Arrow from '@/public/icons/diagarrow.svg'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/router'
+import { deleteCookie } from 'cookies-next/client'
 
 interface NavbarLoginButtonProps {
   showLogin: (value: boolean) => void
@@ -23,6 +24,7 @@ const NavbarLoginButton = ({
         if (isAuthenticated) {
           void signOut(auth)
           showLogin(false)
+          deleteCookie('userId')
           setIsAuthenticated(false)
           void router.push('/')
           return
@@ -36,7 +38,7 @@ const NavbarLoginButton = ({
       onClick={handleAuthAction}
     > */}
       <div className="text-customBlack uppercase text-xl font-medium">
-        {isAuthenticated ? 'Log Out' : 'Log In'}
+        {(isAuthenticated) ? 'Log Out' : 'Log In'}
       </div>
       <div className="border border-customBlack rounded-full px-6 py-2">
         <Image src={Arrow} alt="arrow" width={20} height={20} />

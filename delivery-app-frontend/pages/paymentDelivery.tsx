@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { collection, doc, addDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { User } from "@/data";
+import { getCookie } from "cookies-next/client";
 
 declare const google: any;
 
@@ -32,7 +33,7 @@ const PaymentDelivery = ({user}: {user: User}) => {
   const [nearestWarehouse, setNearestWarehouse] = useState<any>(null);
 
   useEffect(() => {
-    if (!user || !user.id) {
+    if ((!user || !user.id) && getCookie('userId') === null) {
       void router.push("/");
     }
   })
