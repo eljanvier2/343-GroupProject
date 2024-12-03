@@ -1,5 +1,5 @@
 import { Delivery } from "@/data";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DeliveryComponent from "./Delivery";
 
 interface DeliveriesProps {
@@ -7,13 +7,21 @@ interface DeliveriesProps {
 }
 
 const Deliveries = ({ deliveries }: DeliveriesProps): JSX.Element => {
-  deliveries = deliveries.filter((delivery) => delivery.trackingId);
-  const [displayedDeliveries, setDisplayedDeliveries] = useState(
-    deliveries.slice(0, 3)
-  );
-  const [expanded, setExpanded] = useState(false);
+  const [displayedDeliveries, setDisplayedDeliveries] = useState<Delivery[]>([]);
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const filteredDeliveries = deliveries.filter((delivery) => delivery.trackingId);
+    setDisplayedDeliveries(filteredDeliveries.slice(0, 3));
+  }, [deliveries]);
+
   return (
     <div className="w-full">
+      {displayedDeliveries.length === 0 && (
+        <div className="text-center text-black my-2">
+            No deliveries found
+        </div>
+      )}
       {displayedDeliveries.map((delivery, index) => {
         if (delivery.trackingId) {
           return (

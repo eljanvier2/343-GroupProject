@@ -22,22 +22,21 @@ const Navbar = ({
 }: NavbarProps): JSX.Element => {
   const router = typeof window !== "undefined" ? useRouter() : undefined;
   let usedRoutes = dashboard ? dashboardRoutes : routes;
-  const userId = getCookie('userId')
-
-  useEffect(() => {
-    // find if route with name 'Dashboard' exists and remove it if !isAuthenticated
-    const index = usedRoutes.findIndex((route) => route.name === "Dashboard");
-    if ((!isAuthenticated && getCookie('userId') === undefined) && index !== -1) {
-      usedRoutes.splice(index, 1);
-    }
-  })
+  const userId = getCookie("userId");
 
   return (
     <div className="w-full flex justify-between items-center px-20 py-2.5 border-b border-black/20">
-      <div className="w-1/3 cursor-pointer" onClick={() => {
-        void router?.push('/')
-      }}>
-        <Image src={Logo} alt="logo" width={100} height={100} />
+      <div className="w-1/3">
+        <Image
+          src={Logo}
+          alt="logo"
+          width={100}
+          height={100}
+          className="cursor-pointer"
+          onClick={() => {
+            void router?.push("/");
+          }}
+        />
       </div>
       <div className="flex justify-between items-center w-1/3">
         {usedRoutes.map((route, index) => {
@@ -45,7 +44,7 @@ const Navbar = ({
             <NavbarButton
               text={route.name}
               onClick={() => {
-                void router?.push(route.path + `?userId=${userId}`)
+                void router?.push(route.path + `?userId=${userId}`);
               }}
               key={index}
             />

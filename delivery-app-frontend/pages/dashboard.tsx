@@ -29,7 +29,7 @@ const Dashboard = ({
 }: DashboardProps): JSX.Element => {
   const router = useRouter();
   useEffect(() => {
-    if (!isAuthenticated && getCookie('userId') === undefined) {
+    if (!isAuthenticated && getCookie("userId") === undefined) {
       void router.push("/");
     }
   });
@@ -47,12 +47,9 @@ const Dashboard = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
   let { userId } = context.query;
   let fetchedUser = null;
-  if (!userId) {
-    userId = getCookie('userId')
-  }
   if (userId) {
     const userDoc = await getDoc(doc(db, "users", userId as string));
     if (userDoc.exists()) {
@@ -61,29 +58,36 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const notificationsSnapshot = await getDocs(
         collection(db, "users", userId as string, "notifications")
       );
+      const deliveriesSnapshot = await getDocs(
+        collection(db, "users", userId as string, "deliveries")
+      );
       fetchedUser.notifications = notificationsSnapshot.docs.map((doc) => ({
         id: doc.id,
         titre: doc.data().title,
         ...doc.data(),
       })) as Notification[];
 
-      const deliveriesSnapshot = await getDocs(
-        collection(db, "users", userId as string, "deliveries")
-      );
       fetchedUser.deliveries = deliveriesSnapshot.docs.map((doc) => {
         const data = doc.data();
         return {
           id: doc.id,
           trackingId: data.trackingId ?? null,
-          departure: data.departure instanceof Timestamp ? data.departure.toDate().toISOString() : null,
-          from: data.from ? {
-            latitude: data.from[0] ?? null,
-            longitude: data.from[1] ?? null,
-          } : null,
-          to: data.to ? {
-            latitude: data.to[0] ?? null,
-            longitude: data.to[1] ?? null,
-          } : null,
+          departure:
+            data.departure instanceof Timestamp
+              ? data.departure.toDate().toISOString()
+              : null,
+          from: data.from
+            ? {
+                latitude: data.from[0] ?? null,
+                longitude: data.from[1] ?? null,
+              }
+            : null,
+          to: data.to
+            ? {
+                latitude: data.to[0] ?? null,
+                longitude: data.to[1] ?? null,
+              }
+            : null,
           status: data.status ?? null,
           weight: data.weight ?? null,
         };
