@@ -19,7 +19,6 @@ const Frame1 = ({ isAuthenticated }: Frame1Props): JSX.Element => {
     }
     router.push("/paymentDelivery");
   };
-  console.log(getCookie('userId'),'aaaaaaaaaaaaaaaaa')
   return (
     <div className="flex flex-col items-center">
       <div className="flex-col uppercase text-center -space-y-2">
