@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Logo from '@/public/images/dronelogo.svg'
 import DroneSignup from '@/public/images/dronelogin.jpg'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { collection, doc, GeoPoint, setDoc, Timestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 interface SignUpProps {
   showSignup: (value: boolean) => void
@@ -14,19 +16,35 @@ const SignUp = ({ showSignup }: SignUpProps): JSX.Element => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const auth = getAuth()
 
-  const handleSignUp = (e: React.FormEvent): void => {
+  const handleSignUp = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
     if (password !== confirmPassword) {
       alert('Passwords do not match!')
       return
     }
     try {
-      void createUserWithEmailAndPassword(auth, email, password).then(() => {
-        showSignup(false)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const userId = userCredential.user.uid
+      const userDocRef = doc(db, 'users', userId)
+      await setDoc(userDocRef, { email })
+      await setDoc(doc(collection(userDocRef, 'deliveries')), {
+        address: '',
+        departure: new Date(),
+        from: new GeoPoint(0, 0),
+        to: new GeoPoint(0, 0),
+        price: 0,
+        weight: 0,
       })
+      await setDoc(doc(collection(userDocRef, 'notifications')), {
+        description: '',
+        title: '',
+        type: 0,
+      })
+      showSignup(false)
     } catch (error:any) {
       console.error('Error creating user:', error)
       alert(error.message)
+      return;
     }
   }
 
